@@ -49,10 +49,10 @@ let animationId = null;
 const renderLoop = () => {
     fps.render();
 
-    /*init()
+    init()
         .then(() => {
             greet("WebAssembly")
-        });*/
+        });
 
     animationId = requestAnimationFrame(renderLoop);
 };
