@@ -1,24 +1,34 @@
-use pancurses::*; // watch for globs
+use gamestate::*;
+use pancurses::*;
 
 //const DEBUG: bool = true;
 
-#[derive(Debug)]
-struct Gamestate {
-    current_tick: u64,
-    input: Option<Input>,
-}
+mod gamestate {
+    use pancurses::Input;
 
-impl Gamestate {
-    fn tick(&mut self) {
-        self.current_tick += 1
+    #[derive(Debug)]
+    pub struct Gamestate {
+        tick: u64,
+        raw_input: Option<Input>,
+    }
+
+    impl Gamestate {
+        pub fn new() -> Gamestate {
+            Gamestate {
+                tick: 0,
+                raw_input: None,
+            }
+        }
+
+        pub fn tick(&mut self, raw_input: Option<Input>) {
+            self.tick += 1;
+            self.raw_input = raw_input;
+        }
     }
 }
 
 fn main() {
-    let mut gamestate = Gamestate {
-        current_tick: 0,
-        input: None,
-    };
+    let mut gamestate = gamestate::Gamestate::new();
 
     let window = initscr();
     window.nodelay(false);
@@ -28,17 +38,12 @@ fn main() {
 
     loop {
         render(&gamestate, &window);
-        process_input(&mut gamestate, &window);
-        update(&mut gamestate);
+        update(&mut gamestate, &window);
     }
 }
 
-fn process_input(gamestate: &mut Gamestate, window: &Window) {
-    gamestate.input = window.getch(); // TODO: Define legal inputs and check here before assigning to gamestate
-}
-
-fn update(gamestate: &mut Gamestate) {
-    gamestate.tick()
+fn update(gamestate: &mut Gamestate, window: &Window) {
+    gamestate.tick(window.getch())
 }
 
 fn render(gamestate: &Gamestate, window: &Window) {
