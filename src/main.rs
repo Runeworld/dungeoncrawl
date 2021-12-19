@@ -26,7 +26,7 @@ fn main() {
 
 fn render(gamestate: &Gamestate, window: &Window) {
     window.clear();
-    window.addstr(&format!("{:?}", gamestate));
+    window.addstr(&format!("{:#?}", gamestate));
     window.refresh();
 }
 
