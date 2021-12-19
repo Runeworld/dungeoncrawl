@@ -7,8 +7,6 @@ use input_processing::*;
 // External dependencies
 use pancurses::*;
 
-const DEBUG: bool = true;
-
 fn main() {
     let mut gamestate = Gamestate::new();
 
@@ -35,11 +33,13 @@ fn get_legal_input(window: &Window) -> LegalInput {
     let mut legal_input = LegalInput::None;
     while !is_legal_input {
         let raw_input = window.getch();
-        if DEBUG {
+
+        if cfg!(debug_assertions) {
             window.clear();
             window.addstr(&format!("{:?}", raw_input));
             window.refresh();
         }
+
         legal_input = match raw_input {
             Some(Input::KeyUp) => LegalInput::ArrowKeyUp,
             Some(Input::KeyDown) => LegalInput::ArrowKeyDown,
