@@ -1,34 +1,11 @@
+mod gamestate;
 use gamestate::*;
 use pancurses::*;
 
 //const DEBUG: bool = true;
 
-mod gamestate {
-    use pancurses::Input;
-
-    #[derive(Debug)]
-    pub struct Gamestate {
-        tick: u64,
-        raw_input: Option<Input>,
-    }
-
-    impl Gamestate {
-        pub fn new() -> Gamestate {
-            Gamestate {
-                tick: 0,
-                raw_input: None,
-            }
-        }
-
-        pub fn tick(&mut self, raw_input: Option<Input>) {
-            self.tick += 1;
-            self.raw_input = raw_input;
-        }
-    }
-}
-
 fn main() {
-    let mut gamestate = gamestate::Gamestate::new();
+    let mut gamestate = Gamestate::new();
 
     let window = initscr();
     window.nodelay(false);
