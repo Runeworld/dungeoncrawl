@@ -1,22 +1,21 @@
-
-use pancurses::Input;
+use crate::LegalInput;
 
 #[derive(Debug)]
 pub struct Gamestate {
     tick: u64,
-    raw_input: Option<Input>,
+    input: LegalInput,
 }
 
 impl Gamestate {
     pub fn new() -> Gamestate {
         Gamestate {
             tick: 0,
-            raw_input: None,
+            input: LegalInput::Enter,
         }
     }
 
-    pub fn tick(&mut self, raw_input: Option<Input>) {
+    pub fn tick(&mut self, input: LegalInput) {
         self.tick += 1;
-        self.raw_input = raw_input;
+        self.input = input;
     }
 }
