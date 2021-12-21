@@ -21,6 +21,7 @@ impl UserInterface {
     }
 
     pub fn get_input(&self) -> crate::backend::game::game_input::GameInput {
+        // TODO: Can multiple inputs be queued? Flush buffer after reading key?
         match self.0.getch() {
             Some(Input::KeyUp) => crate::backend::game::game_input::GameInput::Up,
             Some(Input::KeyDown) => crate::backend::game::game_input::GameInput::Down,
@@ -29,6 +30,7 @@ impl UserInterface {
             Some(Input::Character('\n')) => crate::backend::game::game_input::GameInput::Yes,
             Some(Input::Character('\u{7f}')) => crate::backend::game::game_input::GameInput::No,
             Some(Input::Character('\u{1b}')) => crate::backend::game::game_input::GameInput::Exit,
+            Some(Input::KeyF4) => crate::backend::game::game_input::GameInput::PrintDebug,
             Some(_) => crate::backend::game::game_input::GameInput::Illegal,
             None => crate::backend::game::game_input::GameInput::None,
         }

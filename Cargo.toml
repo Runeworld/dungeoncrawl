@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 ncurses = "5.101.0"
 pancurses = "0.17.0"
+rand = "0.8.4"
 
 [target.x86_64-pc-windows-gnu]
 linker = "/usr/bin/x86_64-w64-mingw32-gcc"

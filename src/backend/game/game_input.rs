@@ -1,3 +1,4 @@
+#[derive(PartialEq)]
 pub enum GameInput {
     Up,
     Down,
@@ -6,6 +7,7 @@ pub enum GameInput {
     Yes,
     No,
     Exit,
+    PrintDebug,
     Illegal,
     None,
 }
@@ -19,6 +21,7 @@ impl std::fmt::Display for GameInput {
             GameInput::Yes => write!(f, "Yes"),
             GameInput::No => write!(f, "No"),
             GameInput::Exit => write!(f, "Exit"),
+            GameInput::PrintDebug => write!(f, "PrintDebug"),
             GameInput::Illegal => write!(f, "Illegal"),
             GameInput::None => write!(f, "None"),
         }
