@@ -18,12 +18,16 @@ impl UserInterface {
         self.0.refresh();
     }
 
-    pub fn get_input(&self) -> crate::backend::game::GameInput {
+    pub fn get_input(&self) -> crate::backend::game::game_input::GameInput {
         match self.0.getch() {
-            Some(Input::KeyUp) => crate::backend::game::GameInput::Up,
-            Some(Input::KeyDown) => crate::backend::game::GameInput::Down,
-            Some(_) => crate::backend::game::GameInput::Illegal,
-            None => crate::backend::game::GameInput::None,
+            Some(Input::KeyUp) => crate::backend::game::game_input::GameInput::Up,
+            Some(Input::KeyDown) => crate::backend::game::game_input::GameInput::Down,
+            Some(Input::KeyLeft) => crate::backend::game::game_input::GameInput::Left,
+            Some(Input::KeyRight) => crate::backend::game::game_input::GameInput::Right,
+            Some(Input::Character('\n')) => crate::backend::game::game_input::GameInput::Yes,
+            Some(Input::Character('\u{7f}')) => crate::backend::game::game_input::GameInput::No,
+            Some(_) => crate::backend::game::game_input::GameInput::Illegal,
+            None => crate::backend::game::game_input::GameInput::None,
         }
     }
 }
