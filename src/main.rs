@@ -1,4 +1,7 @@
-//TODO: Fix mousewheel up and down being recognized as arrow key up and down
+// TODO: Fix mousewheel up and down being recognized as arrow key up and down
+
+use chrono::Utc;
+use std::io::Write;
 
 mod backend;
 mod frontend;
@@ -19,7 +22,22 @@ fn main() {
         if cfg!(debug_assertions)
             && user_input == crate::backend::game::game_input::GameInput::PrintDebug
         {
-            game.text_output.push_str("\n## SAVED DEBUG OUTPUT ##");
+            // TODO: Make each file truly unique to prevent overwriting (timestamp is not unique)
+            let datetime_utc = Utc::now();
+            let timestamp: i64 = datetime_utc.timestamp();
+
+            let path = format!("RuneworldDebug_{}.txt", timestamp);
+            let path = path.as_str();
+
+            let mut file = std::fs::File::create(path).expect("create failed");
+
+            file.write_all(format!("{:#?}", game).as_bytes())
+                .expect("write failed");
+
+            //file.write_all("\nTutorialsPoint".as_bytes()).expect("write failed");
+
+            game.text_output
+                .push_str(format!("\nSAVED DEBUG OUTPUT TO FILE {}", path).as_str());
         }
     }
 }

@@ -26,8 +26,4 @@ impl Game {
         self.tick += 1;
         self.text_output = input.to_string();
     }
-
-    pub fn get_debug_string(&self) -> String {
-        format!("{:#?}", self)
-    }
 }

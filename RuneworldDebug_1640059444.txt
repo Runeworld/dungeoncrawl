@@ -1,0 +1,42 @@
+Game {
+    text_output: "PrintDebug",
+    tick: 14,
+    player: Player {
+        name: NamePerson {
+            name: "Michael",
+        },
+        location: Location {
+            name: NameCity {
+                name: "Decatur",
+            },
+            actors: [
+                Actor {
+                    name: NamePerson {
+                        name: "Matthew",
+                    },
+                },
+            ],
+        },
+    },
+    regions: [
+        Region {
+            name: NameRegion {
+                name: "Northern Peninsula",
+            },
+            locations: [
+                Location {
+                    name: NameCity {
+                        name: "Athens",
+                    },
+                    actors: [
+                        Actor {
+                            name: NamePerson {
+                                name: "Robert",
+                            },
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+}
