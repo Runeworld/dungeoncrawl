@@ -29,6 +29,7 @@ fn main() {
             let path = format!("debug-output/debug_{}.txt", timestamp);
             let path = path.as_str();
 
+            let dir = std::fs::create_dir("debug-output").expect("create failed");
             let mut file = std::fs::File::create(path).expect("create failed");
 
             file.write_all(format!("{:#?}", game).as_bytes())
