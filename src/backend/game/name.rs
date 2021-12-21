@@ -10,6 +10,10 @@ impl NamePerson {
             name: get_random_str_from_list(PERSON_FIRST_NAMES),
         }
     }
+
+    pub fn new(name: &'static str) -> NamePerson {
+        NamePerson { name }
+    }
 }
 
 #[derive(Debug)]
@@ -22,6 +26,10 @@ impl NameCity {
             name: get_random_str_from_list(CITY_NAMES),
         }
     }
+
+    pub fn new(name: &'static str) -> NameCity {
+        NameCity { name }
+    }
 }
 
 #[derive(Debug)]
@@ -33,6 +41,10 @@ impl NameRegion {
         NameRegion {
             name: get_random_str_from_list(REGION_NAMES),
         }
+    }
+
+    pub fn new(name: &'static str) -> NameRegion {
+        NameRegion { name }
     }
 }
 

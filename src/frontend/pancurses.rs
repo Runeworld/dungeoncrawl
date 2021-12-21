@@ -1,3 +1,4 @@
+// TODO: ncurses -> set_escdelay(0) only on linux
 //use ncurses::set_escdelay;
 use pancurses::*;
 

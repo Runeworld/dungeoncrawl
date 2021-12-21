@@ -33,8 +33,6 @@ fn main() {
             file.write_all(format!("{:#?}", game).as_bytes())
                 .expect("write failed");
 
-            //file.write_all("\nTutorialsPoint".as_bytes()).expect("write failed");
-
             game.text_output
                 .push_str(format!("\nSAVED DEBUG OUTPUT TO FILE {}", path).as_str());
         }

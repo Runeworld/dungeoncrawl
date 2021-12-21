@@ -7,6 +7,15 @@ pub struct Region {
     locations: Vec<Location>,
 }
 
+impl Region {
+    fn new(name: &'static str) -> Region {
+        Region {
+            name: NameRegion::new(name),
+            locations: Location::get_all_for_region(name),
+        }
+    }
+}
+
 pub fn get_all() -> Vec<Region> {
     vec![Region {
         name: NameRegion::get_random(),

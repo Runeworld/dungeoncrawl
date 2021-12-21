@@ -10,16 +10,17 @@ pub struct Game {
     id: i64,
     tick: u32,
     pub text_output: String,
-    player: player::Player,
+    //player: player::Player,
     regions: Vec<region::Region>,
 }
+
 impl Game {
     pub fn init(id: i64) -> Game {
         Game {
             id,
             tick: 0,
             text_output: "Initial text_output".to_string(),
-            player: player::Player::get_test_player(),
+            //player: player::Player::get_test_player(),
             regions: region::get_all(),
         }
     }
