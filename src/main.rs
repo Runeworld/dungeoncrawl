@@ -19,9 +19,9 @@ fn main() {
     half_delay(INPUT_TIMEOUT_IN_TENTHS_OF_SECOND);
 
     loop {
+        gamestate.tick();
         render(&gamestate, &window);
         gamestate.set_input(get_legal_input(&window, true));
-        gamestate.tick();
     }
 }
 
