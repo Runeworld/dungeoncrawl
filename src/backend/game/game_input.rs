@@ -5,6 +5,7 @@ pub enum GameInput {
     Right,
     Yes,
     No,
+    Exit,
     Illegal,
     None,
 }
@@ -17,6 +18,7 @@ impl std::fmt::Display for GameInput {
             GameInput::Right => write!(f, "Right"),
             GameInput::Yes => write!(f, "Yes"),
             GameInput::No => write!(f, "No"),
+            GameInput::Exit => write!(f, "Exit"),
             GameInput::Illegal => write!(f, "Illegal"),
             GameInput::None => write!(f, "None"),
         }

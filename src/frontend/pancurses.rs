@@ -1,3 +1,4 @@
+use ncurses::set_escdelay;
 use pancurses::*;
 
 pub struct UserInterface(Window);
@@ -6,6 +7,7 @@ impl UserInterface {
         let window = initscr();
         window.keypad(true);
         noecho();
+        set_escdelay(0);
         //half_delay(10);
         UserInterface(window)
     }
@@ -26,6 +28,7 @@ impl UserInterface {
             Some(Input::KeyRight) => crate::backend::game::game_input::GameInput::Right,
             Some(Input::Character('\n')) => crate::backend::game::game_input::GameInput::Yes,
             Some(Input::Character('\u{7f}')) => crate::backend::game::game_input::GameInput::No,
+            Some(Input::Character('\u{1b}')) => crate::backend::game::game_input::GameInput::Exit,
             Some(_) => crate::backend::game::game_input::GameInput::Illegal,
             None => crate::backend::game::game_input::GameInput::None,
         }
