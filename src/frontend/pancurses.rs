@@ -1,4 +1,4 @@
-use ncurses::set_escdelay;
+//use ncurses::set_escdelay;
 use pancurses::*;
 
 pub struct UserInterface(Window);
@@ -7,7 +7,7 @@ impl UserInterface {
         let window = initscr();
         window.keypad(true);
         noecho();
-        set_escdelay(0);
+        //set_escdelay(0);
         //half_delay(10);
         UserInterface(window)
     }
