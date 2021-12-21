@@ -7,16 +7,18 @@ mod region;
 
 #[derive(Debug)]
 pub struct Game {
-    pub text_output: String,
+    id: i64,
     tick: u32,
+    pub text_output: String,
     player: player::Player,
     regions: Vec<region::Region>,
 }
 impl Game {
-    pub fn init() -> Game {
+    pub fn init(id: i64) -> Game {
         Game {
-            text_output: "Initial text_output".to_string(),
+            id,
             tick: 0,
+            text_output: "Initial text_output".to_string(),
             player: player::Player::get_test_player(),
             regions: region::get_all(),
         }

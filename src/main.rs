@@ -9,7 +9,7 @@ mod frontend;
 fn main() {
     // Init
     let interface = crate::frontend::pancurses::UserInterface::init();
-    let mut game = crate::backend::game::Game::init();
+    let mut game = crate::backend::game::Game::init(Utc::now().timestamp());
     let mut user_input; /*= crate::backend::game::game_input::GameInput::None;*/
 
     // Gameloop
