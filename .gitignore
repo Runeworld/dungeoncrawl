@@ -81,6 +81,5 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,windows,visualstudiocode,rust
 
-# Added by cargo
-
-/target
+# Game debug outputs
+debug-output/

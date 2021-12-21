@@ -26,7 +26,7 @@ fn main() {
             let datetime_utc = Utc::now();
             let timestamp: i64 = datetime_utc.timestamp();
 
-            let path = format!("RuneworldDebug_{}.txt", timestamp);
+            let path = format!("debug-output/debug_{}.txt", timestamp);
             let path = path.as_str();
 
             let mut file = std::fs::File::create(path).expect("create failed");
