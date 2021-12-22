@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy = "0.5.0"
+bevy = { version = "0.5.0", features = ["dynamic"] } # Remove dynamic for release
 
 [target.x86_64-pc-windows-gnu]
 linker = "/usr/bin/x86_64-w64-mingw32-gcc"
