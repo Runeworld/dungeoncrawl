@@ -1,66 +1,107 @@
 use bevy::prelude::*;
-use names::Generator;
-
-const WORLD_POPULATION: u32 = 100;
 
 fn main() {
     App::build()
-        .add_plugins(DefaultPlugins)
-        .add_plugin(WorldSetupPlugin)
-        .add_plugin(RegisterSystemsPlugins)
+        .add_plugins(MinimalPlugins)
+        .add_startup_system(setup.system())
         .run();
 }
 
-/* START Plugins */
-struct WorldSetupPlugin;
-impl Plugin for WorldSetupPlugin {
-    fn build(&self, app: &mut AppBuilder) {
-        app.add_startup_system(add_people.system());
-    }
+fn setup(mut commands: Commands) {
+    println!("SETUP! {}:{}:{}", file!(), line!(), column!());
+
+    // Create locations
+    commands.spawn_bundle(LocationBundle {
+        location: Location,
+        name: LocationName("Nelenarius"),
+        position: LocationPosition { x: 1., y: 3. },
+        population: LocationPopulation(1000),
+        economy: LocationEconomy::Agriculture,
+        government: LocationGovernment::Anarchy,
+        religion: LocationReligion::Polytheism,
+        military: LocationMilitary {
+            military_type: LocationMilitaryType::LowTech,
+            military_strength: LocationMilitaryStrength(100),
+        },
+        wealth: LocationWealth(1000),
+    });
+    commands.spawn_bundle(LocationBundle {
+        location: Location,
+        name: LocationName("Iorius City"),
+        position: LocationPosition { x: 1., y: 1. },
+        population: LocationPopulation(10000),
+        economy: LocationEconomy::Production,
+        government: LocationGovernment::Anarchy,
+        religion: LocationReligion::Polytheism,
+        military: LocationMilitary {
+            military_type: LocationMilitaryType::LowTech,
+            military_strength: LocationMilitaryStrength(100),
+        },
+        wealth: LocationWealth(1000),
+    });
+    commands.spawn_bundle(LocationBundle {
+        location: Location,
+        name: LocationName("Narryne"),
+        position: LocationPosition { x: 10., y: 10. },
+        population: LocationPopulation(10000),
+        economy: LocationEconomy::Mining,
+        government: LocationGovernment::Anarchy,
+        religion: LocationReligion::Polytheism,
+        military: LocationMilitary {
+            military_type: LocationMilitaryType::LowTech,
+            military_strength: LocationMilitaryStrength(100),
+        },
+        wealth: LocationWealth(1000),
+    });
+
+    // Populate each location with actors
 }
 
-struct RegisterSystemsPlugins;
-impl Plugin for RegisterSystemsPlugins {
-    fn build(&self, app: &mut AppBuilder) {
-        app.insert_resource(GreetTimer(Timer::from_seconds(2.0, true)))
-            .add_system(print_people.system());
-    }
+#[derive(Bundle)]
+struct LocationBundle {
+    location: Location,
+    name: LocationName,
+    position: LocationPosition,
+    population: LocationPopulation,
+    economy: LocationEconomy,
+    government: LocationGovernment,
+    religion: LocationReligion,
+    military: LocationMilitary,
+    wealth: LocationWealth,
 }
 
-/* START Systems */
-fn add_people(mut commands: Commands) {
-    let mut generator = Generator::default();
-    for n in 0..WORLD_POPULATION {
-        commands
-            .spawn()
-            .insert(PersonComponent)
-            .insert(NameComponent(generator.next().unwrap()))
-            .insert(AgeComponent(n))
-            .insert(LevelComponent(n));
-    }
+#[derive(Bundle)]
+struct LocationMilitary {
+    military_type: LocationMilitaryType,
+    military_strength: LocationMilitaryStrength,
 }
 
-fn print_people(
-    time: Res<Time>,
-    mut timer: ResMut<GreetTimer>,
-    query: Query<(&NameComponent, &AgeComponent, &LevelComponent), With<PersonComponent>>,
-) {
-    // update our timer with the time elapsed since the last update
-    // if that caused the timer to finish, we say hello to everyone
-    if timer.0.tick(time.delta()).just_finished() {
-        for (name, age, level) in query.iter() {
-            println!("hello {}!", name.0);
-            println!("age: {}", age.0);
-            println!("level: {}", level.0);
-        }
-    }
+struct Location;
+struct LocationName(&'static str);
+struct LocationPosition {
+    x: f32,
+    y: f32,
 }
-
-/* START Resources */
-struct GreetTimer(Timer);
-
-/* START Components */
-struct PersonComponent;
-struct NameComponent(String);
-struct AgeComponent(u32);
-struct LevelComponent(u32);
+struct LocationPopulation(u32);
+enum LocationEconomy {
+    Mining,
+    Agriculture,
+    Production,
+}
+enum LocationGovernment {
+    Anarchy,
+    Dictatorship,
+    Democracy,
+    Theocracy,
+}
+enum LocationReligion {
+    Monotheism,
+    Polytheism,
+    Atheism,
+}
+struct LocationWealth(u32);
+enum LocationMilitaryType {
+    LowTech,
+    HighTech,
+}
+struct LocationMilitaryStrength(u32);
