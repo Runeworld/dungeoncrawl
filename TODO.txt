@@ -1,5 +1,5 @@
 #### TODO BY PRIORITY ####
-Create GUI window / Get DefaultPlugins to work
+Work through https://doc.rust-lang.org/stable/rust-by-example/
 Display basic tilemap in GUI
 Let player move via arrow keys
 Create locations with positions
@@ -8,7 +8,7 @@ Have location resource storage
 Simulate location resource production based on industry and population
 
 #### DONE BY LATEST ####
-
+Create GUI window / Get DefaultPlugins to work
 
 #### LEARN & PRACTICE ####
 Go through all default plugins and learn what they do / what they offer
