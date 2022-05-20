@@ -4,8 +4,6 @@ mod player_input;
 
 use crate::prelude::*;
 
-use self::entity_render::entity_render;
-
 // Todo: Rename ~get...
 pub fn build_scheduler() -> Schedule {
     Schedule::builder()
