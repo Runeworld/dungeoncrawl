@@ -2,7 +2,7 @@
 // TODO: Work through clippy warnings
 // TODO: Clean up magic numbers / chars / etc.
 // TODO: Upgrade to latest version of Legion ECS
-// TODO: Monster to monster collision
+// TODO: Monster to monster collision?
 
 mod camera;
 mod components;
