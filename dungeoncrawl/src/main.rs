@@ -1,7 +1,8 @@
 #![warn(clippy::pedantic)]
 // TODO: Work through clippy warnings
-// Clean up magic numbers / chars / etc.
-// Upgrade to latest version of Legion ECS
+// TODO: Clean up magic numbers / chars / etc.
+// TODO: Upgrade to latest version of Legion ECS
+// TODO: Monster to monster collision
 
 mod camera;
 mod components;
@@ -72,6 +73,8 @@ impl GameState for State {
         ctx.set_active_console(2);
         ctx.cls();
         self.resources.insert(ctx.key);
+        ctx.set_active_console(0);
+        self.resources.insert(Point::from_tuple(ctx.mouse_pos()));
         let current_state = self.resources.get::<TurnState>().unwrap().clone();
         match current_state {
             TurnState::AwaitingInput => self
