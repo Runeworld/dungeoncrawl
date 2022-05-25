@@ -79,9 +79,10 @@ impl BaseMap for Map {
         if let Some(idx) = self.valid_exit(location, Point::new(0, -1)) {
             exits.push((idx, 1.0))
         }
-        if let Some(idx) = self.valid_exit(location, Point::new(0, -1)) {
+        if let Some(idx) = self.valid_exit(location, Point::new(0, 1)) {
             exits.push((idx, 1.0))
         }
+
         exits
     }
 
