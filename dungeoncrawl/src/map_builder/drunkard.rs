@@ -1,3 +1,5 @@
+/* Map generation based on Drunkard's Walk */
+
 use super::MapArchitect;
 use crate::prelude::*;
 
