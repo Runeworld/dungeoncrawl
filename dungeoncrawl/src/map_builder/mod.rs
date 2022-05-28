@@ -8,9 +8,15 @@ mod drunkard;
 use drunkard::DrunkardsWalkArchitect;
 mod prefab;
 use prefab::apply_prefab;
+mod themes;
+pub use themes::*;
 
 trait MapArchitect {
     fn new(&mut self, rng: &mut RandomNumberGenerator) -> MapBuilder;
+}
+
+pub trait MapTheme: Sync + Send {
+    fn tile_to_render(&self, tile_type: TileType) -> FontCharType;
 }
 
 const NUM_ROOMS: usize = 20;
@@ -20,6 +26,7 @@ pub struct MapBuilder {
     pub monster_spawns: Vec<Point>,
     pub player_start: Point,
     pub amulet_start: Point,
+    pub theme: Box<dyn MapTheme>,
 }
 
 impl MapBuilder {
@@ -31,6 +38,12 @@ impl MapBuilder {
         };
         let mut mb = architect.new(rng);
         apply_prefab(&mut mb, rng);
+
+        mb.theme = match rng.range(0, 2) {
+            0 => DungeonTheme::new(),
+            _ => ForestTheme::new(),
+        };
+
         mb
     }
 
@@ -42,7 +55,7 @@ impl MapBuilder {
         let dijkstra_map = DijkstraMap::new(
             SCREEN_WIDTH,
             SCREEN_HEIGHT,
-            &[self.map.point2d_to_index(self.player_start)],
+            &vec![self.map.point2d_to_index(self.player_start)],
             &self.map,
             1024.0,
         );
@@ -69,7 +82,7 @@ impl MapBuilder {
                 rng.range(2, 10),
             );
             let mut overlap = false;
-            for r in &self.rooms {
+            for r in self.rooms.iter() {
                 if r.intersect(&room) {
                     overlap = true;
                 }
@@ -141,7 +154,7 @@ impl MapBuilder {
         let mut spawns = Vec::new();
         for _ in 0..NUM_MONSTERS {
             let target_index = rng.random_slice_index(&spawnable_tiles).unwrap();
-            spawns.push(spawnable_tiles[target_index]);
+            spawns.push(spawnable_tiles[target_index].clone());
             spawnable_tiles.remove(target_index);
         }
         spawns
