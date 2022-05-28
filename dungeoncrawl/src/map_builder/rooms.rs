@@ -1,3 +1,5 @@
+/* Map generation based on rectangular rooms connected by dogleg corridors */
+
 use super::MapArchitect;
 use crate::prelude::*;
 

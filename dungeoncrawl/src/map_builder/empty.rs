@@ -1,3 +1,5 @@
+/* Minimal reference implementation for MapArchitect */
+
 use super::MapArchitect;
 use crate::prelude::*;
 
