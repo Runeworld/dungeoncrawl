@@ -6,6 +6,8 @@ mod automata;
 use automata::CellularAutomataArchitect;
 mod drunkard;
 use drunkard::DrunkardsWalkArchitect;
+mod prefab;
+use prefab::apply_prefab;
 
 trait MapArchitect {
     fn new(&mut self, rng: &mut RandomNumberGenerator) -> MapBuilder;
@@ -27,8 +29,9 @@ impl MapBuilder {
             1 => Box::new(RoomsArchitect {}),
             _ => Box::new(CellularAutomataArchitect {}),
         };
-        
-        architect.new(rng)
+        let mut mb = architect.new(rng);
+        apply_prefab(&mut mb, rng);
+        mb
     }
 
     fn fill(&mut self, tile: TileType) {
@@ -39,7 +42,7 @@ impl MapBuilder {
         let dijkstra_map = DijkstraMap::new(
             SCREEN_WIDTH,
             SCREEN_HEIGHT,
-            &[self.map.point2d_to_index(self.player_start)],
+            &vec![self.map.point2d_to_index(self.player_start)],
             &self.map,
             1024.0,
         );
@@ -57,17 +60,6 @@ impl MapBuilder {
         )
     }
 
-    fn add_boundaries(&mut self) {
-        for x in 1..SCREEN_WIDTH {
-            self.map.tiles[map_idx(x, 1)] = TileType::Wall;
-            self.map.tiles[map_idx(x, SCREEN_HEIGHT - 1)] = TileType::Wall;
-        }
-        for y in 1..SCREEN_HEIGHT {
-            self.map.tiles[map_idx(1, y)] = TileType::Wall;
-            self.map.tiles[map_idx(SCREEN_WIDTH - 1, y)] = TileType::Wall;
-        }
-    }
-
     fn build_random_rooms(&mut self, rng: &mut RandomNumberGenerator) {
         while self.rooms.len() < NUM_ROOMS {
             let room = Rect::with_size(
@@ -77,7 +69,7 @@ impl MapBuilder {
                 rng.range(2, 10),
             );
             let mut overlap = false;
-            for r in &self.rooms {
+            for r in self.rooms.iter() {
                 if r.intersect(&room) {
                     overlap = true;
                 }
@@ -149,7 +141,7 @@ impl MapBuilder {
         let mut spawns = Vec::new();
         for _ in 0..NUM_MONSTERS {
             let target_index = rng.random_slice_index(&spawnable_tiles).unwrap();
-            spawns.push(spawnable_tiles[target_index]);
+            spawns.push(spawnable_tiles[target_index].clone());
             spawnable_tiles.remove(target_index);
         }
         spawns
