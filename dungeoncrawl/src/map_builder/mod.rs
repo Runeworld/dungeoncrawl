@@ -2,8 +2,10 @@ use crate::prelude::*;
 mod empty;
 //mod rooms;
 //use rooms::RoomsArchitect;
-mod automata;
-use automata::CellularAutomataArchitect;
+//mod automata;
+//use automata::CellularAutomataArchitect;
+mod drunkard;
+use drunkard::DrunkardsWalkArchitect;
 
 trait MapArchitect {
     fn new(&mut self, rng: &mut RandomNumberGenerator) -> MapBuilder;
@@ -20,7 +22,7 @@ pub struct MapBuilder {
 
 impl MapBuilder {
     pub fn new(rng: &mut RandomNumberGenerator) -> Self {
-        let mut architect = CellularAutomataArchitect {};
+        let mut architect = DrunkardsWalkArchitect {};
         architect.new(rng)
     }
 
@@ -48,6 +50,17 @@ impl MapBuilder {
                 .unwrap()
                 .0,
         )
+    }
+
+    fn add_boundaries(&mut self) {
+        for x in 1..SCREEN_WIDTH {
+            self.map.tiles[map_idx(x, 1)] = TileType::Wall;
+            self.map.tiles[map_idx(x, SCREEN_HEIGHT - 1)] = TileType::Wall;
+        }
+        for y in 1..SCREEN_HEIGHT {
+            self.map.tiles[map_idx(1, y)] = TileType::Wall;
+            self.map.tiles[map_idx(SCREEN_WIDTH - 1, y)] = TileType::Wall;
+        }
     }
 
     fn build_random_rooms(&mut self, rng: &mut RandomNumberGenerator) {
