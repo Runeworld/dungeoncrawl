@@ -135,6 +135,15 @@ impl State {
         self.resources.insert(TurnState::AwaitingInput);
         self.resources.insert(map_builder.theme);
     }
+
+    fn advance_level(&mut self) {
+        /* TODO */
+        // Remove entities that aren't the player or items carried by the player
+        // Set player FOV to dirty
+        // Generate new level
+        // Check current level number to determine if an exit or an amulet should be spawned
+        // Set up spawned monsters and resources
+    }
 }
 impl GameState for State {
     fn tick(&mut self, ctx: &mut BTerm) {
@@ -160,6 +169,7 @@ impl GameState for State {
                 .execute(&mut self.ecs, &mut self.resources),
             TurnState::GameOver => self.game_over(ctx),
             TurnState::Victory => self.victory(ctx),
+            TurnState::NextLevel => self.advance_level(),
         }
         render_draw_buffer(ctx).expect("Render error");
     }
