@@ -16,7 +16,27 @@ pub struct Player {
 pub struct Enemy;
 
 #[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Item;
+
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Weapon;
+
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct AmuletOfYala;
+
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct ProvidesHealing {
+    pub amount: i32,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct ProvidesDungeonMap;
+
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct MovingRandomly;
+
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct ChasingPlayer;
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct WantsToMove {
@@ -39,20 +59,23 @@ pub struct Health {
 #[derive(Clone, PartialEq)]
 pub struct Name(pub String);
 
-#[derive(Clone, Copy, Debug, PartialEq)]
-pub struct ChasingPlayer;
+#[derive(Clone, PartialEq)]
+pub struct Carried(pub Entity);
 
 #[derive(Clone, Copy, Debug, PartialEq)]
-pub struct Item;
+pub struct ActivateItem {
+    pub used_by: Entity,
+    pub item: Entity,
+}
 
 #[derive(Clone, Copy, Debug, PartialEq)]
-pub struct AmuletOfYala;
+pub struct Damage(pub i32);
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct FieldOfView {
     pub visible_tiles: HashSet<Point>,
     pub radius: i32,
-    pub is_dirty: bool, // Only dirty data needs updating
+    pub is_dirty: bool,
 }
 
 impl FieldOfView {
@@ -71,21 +94,4 @@ impl FieldOfView {
             is_dirty: true,
         }
     }
-}
-
-#[derive(Clone, Copy, Debug, PartialEq)]
-pub struct ProvidesHealing {
-    pub amount: i32,
-}
-
-#[derive(Clone, Copy, Debug, PartialEq)]
-pub struct ProvidesDungeonMap;
-
-#[derive(Clone, PartialEq)]
-pub struct Carried(pub Entity);
-
-#[derive(Clone, Copy, Debug, PartialEq)]
-pub struct ActivateItem {
-    pub used_by: Entity,
-    pub item: Entity,
 }

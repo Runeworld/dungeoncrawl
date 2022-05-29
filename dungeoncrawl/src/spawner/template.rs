@@ -1,9 +1,14 @@
 use crate::prelude::*;
-use legion::systems::CommandBuffer;
 use ron::de::from_reader;
 use serde::Deserialize;
 use std::collections::HashSet;
 use std::fs::File;
+
+#[derive(Clone, Deserialize, Debug, PartialEq)]
+pub enum EntityType {
+    Enemy,
+    Item,
+}
 
 #[derive(Clone, Deserialize, Debug)]
 pub struct Template {
@@ -14,12 +19,7 @@ pub struct Template {
     pub glyph: char,
     pub provides: Option<Vec<(String, i32)>>,
     pub hp: Option<i32>,
-}
-
-#[derive(Clone, Deserialize, Debug, PartialEq)]
-pub enum EntityType {
-    Enemy,
-    Item,
+    pub base_damage: Option<i32>,
 }
 
 #[derive(Clone, Deserialize, Debug)]
@@ -50,7 +50,7 @@ impl Templates {
                 }
             });
 
-        let mut commands = CommandBuffer::new(ecs);
+        let mut commands = legion::systems::CommandBuffer::new(ecs);
         spawn_points.iter().for_each(|pt| {
             if let Some(entity) = rng.random_slice_entry(&available_entities) {
                 self.spawn_entity(pt, entity, &mut commands);
@@ -59,8 +59,12 @@ impl Templates {
         commands.flush(ecs);
     }
 
-    fn spawn_entity(&self, pt: &Point, template: &Template, commands: &mut CommandBuffer) {
-        // Add shared entity components
+    fn spawn_entity(
+        &self,
+        pt: &Point,
+        template: &Template,
+        commands: &mut legion::systems::CommandBuffer,
+    ) {
         let entity = commands.push((
             pt.clone(),
             Render {
@@ -69,7 +73,6 @@ impl Templates {
             },
             Name(template.name.clone()),
         ));
-        // Add optional entity components
         match template.entity_type {
             EntityType::Item => commands.add_component(entity, Item {}),
             EntityType::Enemy => {
@@ -95,6 +98,12 @@ impl Templates {
                         println!("Warning: we don't know how to provide {}", provides);
                     }
                 });
+        }
+        if let Some(damage) = &template.base_damage {
+            commands.add_component(entity, Damage(*damage));
+            if template.entity_type == EntityType::Item {
+                commands.add_component(entity, Weapon {});
+            }
         }
     }
 }
