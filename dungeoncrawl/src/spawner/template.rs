@@ -56,7 +56,7 @@ impl Templates {
                 Self::spawn_entity(*pt, entity, &mut commands);
             }
         }
-        commands.flush(ecs);
+        commands.flush(ecs, &mut Resources::default());
     }
 
     fn spawn_entity(pt: Point, template: &Template, commands: &mut legion::systems::CommandBuffer) {

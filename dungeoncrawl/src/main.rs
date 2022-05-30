@@ -155,7 +155,7 @@ impl State {
                 cb.remove(*e);
             }
         }
-        cb.flush(&mut self.ecs);
+        cb.flush(&mut self.ecs, &mut self.resources);
 
         <&mut FieldOfView>::query()
             .iter_mut(&mut self.ecs)
