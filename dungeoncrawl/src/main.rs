@@ -134,7 +134,7 @@ impl State {
         let player_entity = *<Entity>::query()
             .filter(component::<Player>())
             .iter(&mut self.ecs)
-            .nth(0)
+            .next()
             .unwrap();
 
         use std::collections::HashSet;
