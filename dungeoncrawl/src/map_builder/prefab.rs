@@ -20,7 +20,7 @@ const FORTRESS: (&str, i32, i32) = (
     11,
 );
 
-pub fn apply_prefab(mb: &mut MapBuilder, rng: &mut RandomNumberGenerator) {
+pub fn insert_fortress(mb: &mut MapBuilder, rng: &mut RandomNumberGenerator) {
     let mut placement = None;
 
     let dijkstra_map = DijkstraMap::new(
@@ -66,7 +66,7 @@ pub fn apply_prefab(mb: &mut MapBuilder, rng: &mut RandomNumberGenerator) {
         let mut i = 0;
         for ty in placement.y..placement.y + FORTRESS.2 {
             for tx in placement.x..placement.x + FORTRESS.1 {
-                let idx = map_idx(tx, ty);
+                let idx = get_idx(tx, ty);
                 let c = string_vec[i];
                 match c {
                     'M' => {

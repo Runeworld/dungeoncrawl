@@ -9,8 +9,8 @@ pub enum TileType {
     Exit,
 }
 
-pub fn map_idx(x: i32, y: i32) -> usize {
-    ((y * SCREEN_WIDTH) + x) as usize
+pub fn get_idx(x: i32, y: i32) -> usize {
+    ((y * SCREEN_WIDTH) + x).abs() as usize
 }
 
 pub struct Map {
@@ -31,17 +31,17 @@ impl Map {
     }
 
     pub fn try_idx(&self, point: Point) -> Option<usize> {
-        if !self.in_bounds(point) {
-            None
+        if self.in_bounds(point) {
+            Some(get_idx(point.x, point.y))
         } else {
-            Some(map_idx(point.x, point.y))
+            None
         }
     }
 
     pub fn can_enter_tile(&self, point: Point) -> bool {
         self.in_bounds(point)
-            && (self.tiles[map_idx(point.x, point.y)] == TileType::Floor
-                || self.tiles[map_idx(point.x, point.y)] == TileType::Exit)
+            && (self.tiles[get_idx(point.x, point.y)] == TileType::Floor
+                || self.tiles[get_idx(point.x, point.y)] == TileType::Exit)
     }
 
     fn valid_exit(&self, loc: Point, delta: Point) -> Option<usize> {
@@ -79,16 +79,16 @@ impl BaseMap for Map {
         let location = self.index_to_point2d(idx);
 
         if let Some(idx) = self.valid_exit(location, Point::new(-1, 0)) {
-            exits.push((idx, 1.0))
+            exits.push((idx, 1.0));
         }
         if let Some(idx) = self.valid_exit(location, Point::new(1, 0)) {
-            exits.push((idx, 1.0))
+            exits.push((idx, 1.0));
         }
         if let Some(idx) = self.valid_exit(location, Point::new(0, -1)) {
-            exits.push((idx, 1.0))
+            exits.push((idx, 1.0));
         }
         if let Some(idx) = self.valid_exit(location, Point::new(0, 1)) {
-            exits.push((idx, 1.0))
+            exits.push((idx, 1.0));
         }
 
         exits

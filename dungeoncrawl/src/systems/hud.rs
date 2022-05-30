@@ -31,7 +31,8 @@ pub fn hud(ecs: &SubWorld) {
 
     let (player, map_level) = <(Entity, &Player)>::query()
         .iter(ecs)
-        .find_map(|(entity, player)| Some((*entity, player.map_level)))
+        .map(|(entity, player)| (*entity, player.map_level))
+        .next()
         .unwrap();
 
     draw_batch.print_color_right(

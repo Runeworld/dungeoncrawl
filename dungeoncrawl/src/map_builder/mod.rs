@@ -7,7 +7,7 @@ use automata::CellularAutomataArchitect;
 mod drunkard;
 use drunkard::DrunkardsWalkArchitect;
 mod prefab;
-use prefab::apply_prefab;
+use prefab::insert_fortress;
 mod themes;
 pub use themes::*;
 
@@ -37,10 +37,10 @@ impl MapBuilder {
             _ => Box::new(CellularAutomataArchitect {}),
         };
         let mut mb = architect.new(rng);
-        apply_prefab(&mut mb, rng);
+        insert_fortress(&mut mb, rng);
 
         mb.theme = match rng.range(0, 2) {
-            0 => DungeonTheme::new(),
+            0 => Box::new(DungeonTheme::new()),
             _ => ForestTheme::new(),
         };
 
@@ -52,6 +52,8 @@ impl MapBuilder {
     }
 
     fn find_most_distant(&self) -> Point {
+        const DIJKSTRA_UNREACHABLE: &f32 = &f32::MAX;
+
         let dijkstra_map = DijkstraMap::new(
             SCREEN_WIDTH,
             SCREEN_HEIGHT,
@@ -60,13 +62,12 @@ impl MapBuilder {
             1024.0,
         );
 
-        const UNREACHABLE: &f32 = &f32::MAX;
         self.map.index_to_point2d(
             dijkstra_map
                 .map
                 .iter()
                 .enumerate()
-                .filter(|(_, dist)| *dist < UNREACHABLE)
+                .filter(|(_, dist)| *dist < DIJKSTRA_UNREACHABLE)
                 .max_by(|a, b| a.1.partial_cmp(b.1).unwrap())
                 .unwrap()
                 .0,
@@ -90,12 +91,12 @@ impl MapBuilder {
             if !overlap {
                 room.for_each(|p| {
                     if p.x > 0 && p.x < SCREEN_WIDTH && p.y > 0 && p.y < SCREEN_HEIGHT {
-                        let idx = map_idx(p.x, p.y);
+                        let idx = get_idx(p.x, p.y);
                         self.map.tiles[idx] = TileType::Floor;
                     }
                 });
 
-                self.rooms.push(room)
+                self.rooms.push(room);
             }
         }
     }

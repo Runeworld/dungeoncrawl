@@ -13,13 +13,13 @@ impl MapArchitect for CellularAutomataArchitect {
             monster_spawns: Vec::new(),
             player_start: Point::zero(),
             amulet_start: Point::zero(),
-            theme: super::themes::DungeonTheme::new(),
+            theme: Box::new(super::themes::DungeonTheme::new()),
         };
-        self.random_noise_map(rng, &mut mb.map);
+        Self::random_noise_map(rng, &mut mb.map);
         for _ in 0..10 {
-            self.iteration(&mut mb.map);
+            Self::iteration(&mut mb.map);
         }
-        let start = self.find_start(&mb.map);
+        let start = Self::find_start(&mb.map);
         mb.monster_spawns = mb.spawn_monsters(&start, rng);
         mb.player_start = start;
         mb.amulet_start = mb.find_most_distant();
@@ -28,7 +28,7 @@ impl MapArchitect for CellularAutomataArchitect {
 }
 
 impl CellularAutomataArchitect {
-    fn random_noise_map(&mut self, rng: &mut RandomNumberGenerator, map: &mut Map) {
+    fn random_noise_map(rng: &mut RandomNumberGenerator, map: &mut Map) {
         map.tiles.iter_mut().for_each(|t| {
             let roll = rng.range(0, 100);
             if roll > 55 {
@@ -39,11 +39,11 @@ impl CellularAutomataArchitect {
         });
     }
 
-    fn count_neighbors(&self, x: i32, y: i32, map: &Map) -> usize {
+    fn count_neighbors(x: i32, y: i32, map: &Map) -> usize {
         let mut neighbors = 0;
         for iy in -1..=1 {
             for ix in -1..=1 {
-                if !(ix == 0 && iy == 0) && map.tiles[map_idx(x + ix, y + iy)] == TileType::Wall {
+                if !(ix == 0 && iy == 0) && map.tiles[get_idx(x + ix, y + iy)] == TileType::Wall {
                     neighbors += 1;
                 }
             }
@@ -52,12 +52,12 @@ impl CellularAutomataArchitect {
         neighbors
     }
 
-    fn iteration(&mut self, map: &mut Map) {
+    fn iteration(map: &mut Map) {
         let mut new_tiles = map.tiles.clone();
         for y in 1..SCREEN_HEIGHT - 1 {
             for x in 1..SCREEN_WIDTH - 1 {
-                let neighbors = self.count_neighbors(x, y, map);
-                let idx = map_idx(x, y);
+                let neighbors = Self::count_neighbors(x, y, map);
+                let idx = get_idx(x, y);
                 if neighbors > 4 || neighbors == 0 {
                     new_tiles[idx] = TileType::Wall;
                 } else {
@@ -68,7 +68,7 @@ impl CellularAutomataArchitect {
         map.tiles = new_tiles;
     }
 
-    fn find_start(&self, map: &Map) -> Point {
+    fn find_start(map: &Map) -> Point {
         let center = Point::new(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
         let closest_point = map
             .tiles

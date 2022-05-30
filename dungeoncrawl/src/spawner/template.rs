@@ -53,20 +53,15 @@ impl Templates {
         let mut commands = legion::systems::CommandBuffer::new(ecs);
         for pt in spawn_points.iter() {
             if let Some(entity) = rng.random_slice_entry(&available_entities) {
-                self.spawn_entity(pt, entity, &mut commands);
+                Self::spawn_entity(*pt, entity, &mut commands);
             }
         }
         commands.flush(ecs);
     }
 
-    fn spawn_entity(
-        &self,
-        pt: &Point,
-        template: &Template,
-        commands: &mut legion::systems::CommandBuffer,
-    ) {
+    fn spawn_entity(pt: Point, template: &Template, commands: &mut legion::systems::CommandBuffer) {
         let entity = commands.push((
-            *pt,
+            pt,
             Render {
                 color: ColorPair::new(WHITE, BLACK),
                 glyph: to_cp437(template.glyph),
