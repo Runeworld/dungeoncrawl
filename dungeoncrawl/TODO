@@ -1,0 +1,19 @@
+=== FEATURES & BUGS ===
+- make edge tile always wall
+- tooltip -> HP
+    - healthbar on enemies?
+- item stacking
+- equipment vs inventory
+- sound
+    - sound effects
+    - BGM
+- directional FOV
+    - directional weakness (side / back)
+    - sneak attacks
+
+=== HOUSEKEEPING ===
+- testing (strategy?)
+- WASM + add to website
+- fix clippy warnings
+- port to Bevy
+- refactor
