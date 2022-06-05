@@ -4,7 +4,7 @@ use serde::Deserialize;
 use std::collections::HashSet;
 use std::fs::File;
 
-#[derive(Clone, Deserialize, Debug, PartialEq)]
+#[derive(Clone, Deserialize, Debug, PartialEq, Eq)]
 pub enum EntityType {
     Enemy,
     Item,
