@@ -1,5 +1,5 @@
 #![warn(clippy::pedantic)]
-#![allow(clippy::trivially_copy_pass_by_ref)]
+#![allow(clippy::trivially_copy_pass_by_ref, clippy::borrowed_box)]
 // TODO: Work through clippy warnings
 // TODO: Clean up magic numbers / chars / etc.
 // TODO: Upgrade to latest version of Legion ECS
