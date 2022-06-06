@@ -58,5 +58,5 @@ pub fn hud(ecs: &SubWorld) {
         );
     }
 
-    draw_batch.submit(10000).expect("Batch error");
+    draw_batch.submit(Z_INDEX_HUD).expect("Batch error");
 }

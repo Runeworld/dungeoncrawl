@@ -34,5 +34,5 @@ pub fn map_render(
             }
         }
     }
-    draw_batch.submit(0).expect("Batch error");
+    draw_batch.submit(Z_INDEX_ENVIRONMENT).expect("Batch error");
 }

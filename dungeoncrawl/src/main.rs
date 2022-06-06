@@ -25,6 +25,10 @@ mod prelude {
     pub const CONSOLE_LAYER_ENVIRONMENT: usize = 0;
     pub const CONSOLE_LAYER_ENTITIES: usize = 1;
     pub const CONSOLE_LAYER_HUD: usize = 2;
+    pub const Z_INDEX_ENVIRONMENT: usize = 0;
+    pub const Z_INDEX_ENTITIES: usize = 5000;
+    pub const Z_INDEX_HUD: usize = 10000;
+    pub const Z_INDEX_TOOLTIPS: usize = 10100;
     pub use crate::camera::*;
     pub use crate::components::*;
     pub use crate::map::*;

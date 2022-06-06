@@ -26,5 +26,5 @@ pub fn tooltips(ecs: &SubWorld, #[resource] mouse_pos: &Point, #[resource] camer
                 };
             draw_batch.print(screen_pos, &display);
         });
-    draw_batch.submit(10100).expect("Batch error");
+    draw_batch.submit(Z_INDEX_TOOLTIPS).expect("Batch error");
 }
