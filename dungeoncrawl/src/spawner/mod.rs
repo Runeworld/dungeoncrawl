@@ -2,13 +2,16 @@ use crate::prelude::*;
 mod template;
 use template::Templates;
 
+pub const GLYPH_PLAYER: char = '@';
+pub const GLYPH_AMULET_OF_YALA: char = '|';
+
 pub fn spawn_player(ecs: &mut World, pos: Point) {
     ecs.push((
         Player { map_level: 0 },
         pos,
         Render {
             color: ColorPair::new(WHITE, BLACK),
-            glyph: to_cp437('@'),
+            glyph: to_cp437(GLYPH_PLAYER),
         },
         Health {
             current: 10,
@@ -36,7 +39,7 @@ pub fn spawn_amulet_of_yala(ecs: &mut World, pos: Point) {
         pos,
         Render {
             color: ColorPair::new(WHITE, BLACK),
-            glyph: to_cp437('|'),
+            glyph: to_cp437(GLYPH_AMULET_OF_YALA),
         },
         Name("Amulet of Yala".to_string()),
     ));
