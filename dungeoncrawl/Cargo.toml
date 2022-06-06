@@ -11,5 +11,12 @@ legion = "0.4.0"
 ron = "0.7.0"
 serde = "1.0.137"
 
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
 [profile.release]
-lto = "thin"
+lto = "thin" # 'fat' for even more performance
