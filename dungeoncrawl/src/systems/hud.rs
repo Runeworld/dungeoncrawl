@@ -11,7 +11,7 @@ pub fn hud(ecs: &SubWorld) {
     let player_health = health_query.iter(ecs).next().unwrap();
 
     let mut draw_batch = DrawBatch::new();
-    draw_batch.target(2);
+    draw_batch.target(CONSOLE_LAYER_HUD);
     draw_batch.print_centered(1, "Explore the Dungeon. Cursor keys to move.");
     draw_batch.bar_horizontal(
         Point::zero(),

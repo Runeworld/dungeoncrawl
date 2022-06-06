@@ -22,6 +22,9 @@ mod prelude {
     pub const SCREEN_HEIGHT: i32 = 50;
     pub const DISPLAY_WIDTH: i32 = SCREEN_WIDTH / 2;
     pub const DISPLAY_HEIGHT: i32 = SCREEN_HEIGHT / 2;
+    pub const CONSOLE_LAYER_ENVIRONMENT: usize = 0;
+    pub const CONSOLE_LAYER_ENTITIES: usize = 1;
+    pub const CONSOLE_LAYER_HUD: usize = 2;
     pub use crate::camera::*;
     pub use crate::components::*;
     pub use crate::map::*;
@@ -66,7 +69,7 @@ impl State {
     }
 
     fn game_over(&mut self, ctx: &mut BTerm) {
-        ctx.set_active_console(2);
+        ctx.set_active_console(CONSOLE_LAYER_HUD);
         ctx.print_color_centered(2, RED, BLACK, "Your quest has ended.");
         ctx.print_color_centered(
             4,
@@ -94,7 +97,7 @@ impl State {
     }
 
     fn victory(&mut self, ctx: &mut BTerm) {
-        ctx.set_active_console(2);
+        ctx.set_active_console(CONSOLE_LAYER_HUD);
         ctx.print_color_centered(2, GREEN, BLACK, "You have won!");
         ctx.print_color_centered(
             4,
@@ -192,14 +195,14 @@ impl State {
 }
 impl GameState for State {
     fn tick(&mut self, ctx: &mut BTerm) {
-        ctx.set_active_console(0);
+        ctx.set_active_console(CONSOLE_LAYER_ENVIRONMENT);
         ctx.cls();
-        ctx.set_active_console(1);
+        ctx.set_active_console(CONSOLE_LAYER_ENTITIES);
         ctx.cls();
-        ctx.set_active_console(2);
+        ctx.set_active_console(CONSOLE_LAYER_HUD);
         ctx.cls();
         self.resources.insert(ctx.key);
-        ctx.set_active_console(0);
+        ctx.set_active_console(CONSOLE_LAYER_ENVIRONMENT);
         self.resources.insert(Point::from_tuple(ctx.mouse_pos()));
         let current_state = *self.resources.get::<TurnState>().unwrap();
         match current_state {

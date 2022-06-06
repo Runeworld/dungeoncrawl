@@ -11,7 +11,7 @@ pub fn entity_render(ecs: &SubWorld, #[resource] camera: &Camera) {
     let player_fov = fov.iter(ecs).next().unwrap();
 
     let mut draw_batch = DrawBatch::new();
-    draw_batch.target(1);
+    draw_batch.target(CONSOLE_LAYER_ENTITIES);
     let offset = Point::new(camera.left_x, camera.top_y);
 
     renderables

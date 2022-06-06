@@ -11,7 +11,7 @@ pub fn map_render(
 ) {
     let mut fov = <&FieldOfView>::query().filter(component::<Player>());
     let mut draw_batch = DrawBatch::new();
-    draw_batch.target(0);
+    draw_batch.target(CONSOLE_LAYER_ENVIRONMENT);
 
     let player_fov = fov.iter(ecs).next().unwrap();
 
