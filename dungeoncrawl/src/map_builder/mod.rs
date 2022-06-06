@@ -55,8 +55,8 @@ impl MapBuilder {
         const DIJKSTRA_UNREACHABLE: &f32 = &f32::MAX;
 
         let dijkstra_map = DijkstraMap::new(
-            SCREEN_WIDTH,
-            SCREEN_HEIGHT,
+            WORLD_WIDTH_IN_TILES,
+            WORLD_HEIGHT_IN_TILES,
             &[self.map.point2d_to_index(self.player_start)],
             &self.map,
             1024.0,
@@ -77,8 +77,8 @@ impl MapBuilder {
     fn build_random_rooms(&mut self, rng: &mut RandomNumberGenerator) {
         while self.rooms.len() < NUM_ROOMS {
             let room = Rect::with_size(
-                rng.range(1, SCREEN_WIDTH - 10),
-                rng.range(1, SCREEN_HEIGHT - 10),
+                rng.range(1, WORLD_WIDTH_IN_TILES - 10),
+                rng.range(1, WORLD_HEIGHT_IN_TILES - 10),
                 rng.range(2, 10),
                 rng.range(2, 10),
             );
@@ -90,7 +90,11 @@ impl MapBuilder {
             }
             if !overlap {
                 room.for_each(|p| {
-                    if p.x > 0 && p.x < SCREEN_WIDTH && p.y > 0 && p.y < SCREEN_HEIGHT {
+                    if p.x > 0
+                        && p.x < WORLD_WIDTH_IN_TILES
+                        && p.y > 0
+                        && p.y < WORLD_HEIGHT_IN_TILES
+                    {
                         let idx = get_idx(p.x, p.y);
                         self.map.tiles[idx] = TileType::Floor;
                     }

@@ -4,7 +4,7 @@ use super::MapArchitect;
 use crate::prelude::*;
 
 const STAGGER_DISTANCE: usize = 400;
-const NUM_TILES: usize = (SCREEN_WIDTH * SCREEN_HEIGHT) as usize;
+const NUM_TILES: usize = (WORLD_WIDTH_IN_TILES * WORLD_HEIGHT_IN_TILES) as usize;
 const DESIRED_FLOOR: usize = NUM_TILES / 3;
 
 pub struct DrunkardsWalkArchitect {}
@@ -21,7 +21,7 @@ impl MapArchitect for DrunkardsWalkArchitect {
         };
 
         mb.fill(TileType::Wall);
-        let center = Point::new(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+        let center = Point::new(WORLD_WIDTH_IN_TILES / 2, WORLD_HEIGHT_IN_TILES / 2);
         Self::drunkard(&center, rng, &mut mb.map);
         while mb
             .map
@@ -32,13 +32,16 @@ impl MapArchitect for DrunkardsWalkArchitect {
             < DESIRED_FLOOR
         {
             Self::drunkard(
-                &Point::new(rng.range(0, SCREEN_WIDTH), rng.range(0, SCREEN_HEIGHT)),
+                &Point::new(
+                    rng.range(0, WORLD_WIDTH_IN_TILES),
+                    rng.range(0, WORLD_HEIGHT_IN_TILES),
+                ),
                 rng,
                 &mut mb.map,
             );
             let dijkstra_map = DijkstraMap::new(
-                SCREEN_WIDTH,
-                SCREEN_HEIGHT,
+                WORLD_WIDTH_IN_TILES,
+                WORLD_HEIGHT_IN_TILES,
                 &[mb.map.point2d_to_index(center)],
                 &mb.map,
                 1024.0,

@@ -1,9 +1,5 @@
 #![warn(clippy::pedantic)]
 #![allow(clippy::trivially_copy_pass_by_ref, clippy::borrowed_box)]
-// TODO: Work through clippy warnings
-// TODO: Clean up magic numbers / chars / etc.
-// TODO: Upgrade to latest version of Legion ECS
-// TODO: Monster to monster collision?
 
 mod camera;
 mod components;
@@ -18,10 +14,10 @@ mod prelude {
     pub use legion::systems::CommandBuffer;
     pub use legion::world::SubWorld;
     pub use legion::*;
-    pub const SCREEN_WIDTH: i32 = 80; // TODO: Rename consts?
-    pub const SCREEN_HEIGHT: i32 = 50;
-    pub const DISPLAY_WIDTH: i32 = SCREEN_WIDTH / 2;
-    pub const DISPLAY_HEIGHT: i32 = SCREEN_HEIGHT / 2;
+    pub const WORLD_WIDTH_IN_TILES: i32 = 80;
+    pub const WORLD_HEIGHT_IN_TILES: i32 = 50;
+    pub const WINDOW_WIDTH_IN_TILES: i32 = WORLD_WIDTH_IN_TILES / 2;
+    pub const WINDOW_HEIGHT_IN_TILES: i32 = WORLD_HEIGHT_IN_TILES / 2;
     pub const CONSOLE_LAYER_ENVIRONMENT: usize = 0;
     pub const CONSOLE_LAYER_ENTITIES: usize = 1;
     pub const CONSOLE_LAYER_HUD: usize = 2;
@@ -49,13 +45,11 @@ struct State {
 }
 impl State {
     fn new() -> Self {
-        // TODO: Fix code duplication new() <-> reset_game_state()
         let mut ecs = World::default();
         let mut resources = Resources::default();
         let mut rng = RandomNumberGenerator::new();
         let mut map_builder = MapBuilder::new(&mut rng);
         spawn_player(&mut ecs, map_builder.player_start);
-        //spawn_amulet_of_yala(&mut ecs, map_builder.amulet_start);
         let exit_idx = map_builder.map.point2d_to_index(map_builder.amulet_start);
         map_builder.map.tiles[exit_idx] = TileType::Exit;
         spawn_level(&mut ecs, &mut rng, 0, &map_builder.monster_spawns);
@@ -231,14 +225,26 @@ fn main() -> BError {
     let context = BTermBuilder::new()
         .with_title("Dungeon Crawler")
         .with_fps_cap(30.0)
-        .with_dimensions(DISPLAY_WIDTH, DISPLAY_HEIGHT)
+        .with_dimensions(WINDOW_WIDTH_IN_TILES, WINDOW_HEIGHT_IN_TILES)
         .with_tile_dimensions(32, 32)
         .with_resource_path("resources/")
         .with_font("dungeonfont.png", 32, 32)
         .with_font("terminal8x8.png", 8, 8)
-        .with_simple_console(DISPLAY_WIDTH, DISPLAY_HEIGHT, "dungeonfont.png")
-        .with_simple_console_no_bg(DISPLAY_WIDTH, DISPLAY_HEIGHT, "dungeonfont.png")
-        .with_simple_console_no_bg(SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, "terminal8x8.png")
+        .with_simple_console(
+            WINDOW_WIDTH_IN_TILES,
+            WINDOW_HEIGHT_IN_TILES,
+            "dungeonfont.png",
+        )
+        .with_simple_console_no_bg(
+            WINDOW_WIDTH_IN_TILES,
+            WINDOW_HEIGHT_IN_TILES,
+            "dungeonfont.png",
+        )
+        .with_simple_console_no_bg(
+            WORLD_WIDTH_IN_TILES * 2,
+            WORLD_HEIGHT_IN_TILES * 2,
+            "terminal8x8.png",
+        )
         .build()?;
     main_loop(context, State::new())
 }

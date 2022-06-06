@@ -54,8 +54,8 @@ impl CellularAutomataArchitect {
 
     fn iteration(map: &mut Map) {
         let mut new_tiles = map.tiles.clone();
-        for y in 1..SCREEN_HEIGHT - 1 {
-            for x in 1..SCREEN_WIDTH - 1 {
+        for y in 1..WORLD_HEIGHT_IN_TILES - 1 {
+            for x in 1..WORLD_WIDTH_IN_TILES - 1 {
                 let neighbors = Self::count_neighbors(x, y, map);
                 let idx = get_idx(x, y);
                 if neighbors > 4 || neighbors == 0 {
@@ -69,7 +69,7 @@ impl CellularAutomataArchitect {
     }
 
     fn find_start(map: &Map) -> Point {
-        let center = Point::new(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+        let center = Point::new(WORLD_WIDTH_IN_TILES / 2, WORLD_HEIGHT_IN_TILES / 2);
         let closest_point = map
             .tiles
             .iter()

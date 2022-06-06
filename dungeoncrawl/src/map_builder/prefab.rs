@@ -24,8 +24,8 @@ pub fn insert_fortress(mb: &mut MapBuilder, rng: &mut RandomNumberGenerator) {
     let mut placement = None;
 
     let dijkstra_map = DijkstraMap::new(
-        SCREEN_WIDTH,
-        SCREEN_HEIGHT,
+        WORLD_WIDTH_IN_TILES,
+        WORLD_HEIGHT_IN_TILES,
         &[mb.map.point2d_to_index(mb.player_start)],
         &mb.map,
         1024.0,
@@ -34,8 +34,8 @@ pub fn insert_fortress(mb: &mut MapBuilder, rng: &mut RandomNumberGenerator) {
     let mut attempts = 0;
     while placement.is_none() && attempts < 10 {
         let dimensions = Rect::with_size(
-            rng.range(0, SCREEN_WIDTH - FORTRESS.1),
-            rng.range(0, SCREEN_HEIGHT - FORTRESS.2),
+            rng.range(0, WORLD_WIDTH_IN_TILES - FORTRESS.1),
+            rng.range(0, WORLD_HEIGHT_IN_TILES - FORTRESS.2),
             FORTRESS.1,
             FORTRESS.2,
         );

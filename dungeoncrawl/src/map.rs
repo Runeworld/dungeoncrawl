@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-const NUM_TILES: usize = (SCREEN_WIDTH * SCREEN_HEIGHT) as usize;
+const NUM_TILES: usize = (WORLD_WIDTH_IN_TILES * WORLD_HEIGHT_IN_TILES) as usize;
 
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub enum TileType {
@@ -10,7 +10,7 @@ pub enum TileType {
 }
 
 pub fn get_idx(x: i32, y: i32) -> usize {
-    ((y * SCREEN_WIDTH) + x).unsigned_abs() as usize
+    ((y * WORLD_WIDTH_IN_TILES) + x).unsigned_abs() as usize
 }
 
 pub struct Map {
@@ -57,11 +57,14 @@ impl Map {
 
 impl Algorithm2D for Map {
     fn dimensions(&self) -> Point {
-        Point::new(SCREEN_WIDTH, SCREEN_HEIGHT)
+        Point::new(WORLD_WIDTH_IN_TILES, WORLD_HEIGHT_IN_TILES)
     }
 
     fn in_bounds(&self, point: Point) -> bool {
-        point.x >= 0 && point.x < SCREEN_WIDTH && point.y >= 0 && point.y < SCREEN_HEIGHT
+        point.x >= 0
+            && point.x < WORLD_WIDTH_IN_TILES
+            && point.y >= 0
+            && point.y < WORLD_HEIGHT_IN_TILES
     }
 }
 

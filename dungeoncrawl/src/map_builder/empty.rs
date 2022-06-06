@@ -16,12 +16,12 @@ impl MapArchitect for EmptyArchitect {
             theme: Box::new(super::themes::DungeonTheme::new()),
         };
         mb.fill(TileType::Floor);
-        mb.player_start = Point::new(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+        mb.player_start = Point::new(WORLD_WIDTH_IN_TILES / 2, WORLD_HEIGHT_IN_TILES / 2);
         mb.amulet_start = mb.find_most_distant();
         for _ in 0..50 {
             mb.monster_spawns.push(Point::new(
-                rng.range(1, SCREEN_WIDTH),
-                rng.range(1, SCREEN_WIDTH),
+                rng.range(1, WORLD_WIDTH_IN_TILES),
+                rng.range(1, WORLD_WIDTH_IN_TILES),
             ));
         }
         mb
