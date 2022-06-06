@@ -10,6 +10,10 @@
 - directional FOV
     - directional weakness (side / back)
     - sneak attacks
+- Overhaul spawner
+    - randomly place monsters and items with respective probability on each open tile further than x away from player
+        - increase monster probability based on level
+        - decrease item probability based on level
 
 === HOUSEKEEPING ===
 - testing (strategy?)
