@@ -14,6 +14,7 @@
     - randomly place monsters and items with respective probability on each open tile further than x away from player
         - increase monster probability based on level
         - decrease item probability based on level
+- restart button for testing
 
 === HOUSEKEEPING ===
 - testing (strategy?)
