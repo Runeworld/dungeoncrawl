@@ -12,7 +12,7 @@ mod themes;
 pub use themes::*;
 
 trait MapArchitect {
-    fn new(&mut self, rng: &mut RandomNumberGenerator) -> MapBuilder;
+    fn get_map_builder(&mut self, rng: &mut RandomNumberGenerator) -> MapBuilder;
 }
 
 pub trait MapTheme: Sync + Send {
@@ -36,7 +36,7 @@ impl MapBuilder {
             1 => Box::new(RoomsArchitect {}),
             _ => Box::new(CellularAutomataArchitect {}),
         };
-        let mut mb = architect.new(rng);
+        let mut mb = architect.get_map_builder(rng);
         insert_fortress(&mut mb, rng);
 
         mb.theme = match rng.range(0, 2) {

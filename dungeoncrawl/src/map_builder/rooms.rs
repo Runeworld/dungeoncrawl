@@ -6,7 +6,7 @@ use crate::prelude::*;
 pub struct RoomsArchitect {}
 
 impl MapArchitect for RoomsArchitect {
-    fn new(&mut self, rng: &mut RandomNumberGenerator) -> MapBuilder {
+    fn get_map_builder(&mut self, rng: &mut RandomNumberGenerator) -> MapBuilder {
         let mut mb = MapBuilder {
             map: Map::new(),
             rooms: Vec::new(),
