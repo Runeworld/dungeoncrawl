@@ -39,7 +39,7 @@ impl MapTheme for ForestTheme {
 }
 
 impl ForestTheme {
-    pub fn new() -> Box<dyn MapTheme> {
-        Box::new(Self {})
+    pub fn new() -> Self {
+        Self {}
     }
 }
