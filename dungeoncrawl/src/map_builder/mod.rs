@@ -1,11 +1,11 @@
 use crate::prelude::*;
 mod empty;
 mod rooms;
-use rooms::RoomsArchitect;
+use rooms::ArchitectRoomsMap;
 mod automata;
-use automata::CellularAutomataArchitect;
+use automata::ArchitectAutomataMap;
 mod drunkard;
-use drunkard::DrunkardsWalkArchitect;
+use drunkard::ArchitectDrunkardMap;
 mod prefab;
 use prefab::insert_fortress;
 mod themes;
@@ -32,9 +32,9 @@ pub struct MapBuilder {
 impl MapBuilder {
     pub fn new(rng: &mut RandomNumberGenerator) -> Self {
         let mut architect: Box<dyn MapArchitect> = match rng.range(0, 3) {
-            0 => Box::new(DrunkardsWalkArchitect {}),
-            1 => Box::new(RoomsArchitect {}),
-            _ => Box::new(CellularAutomataArchitect {}),
+            0 => Box::new(ArchitectDrunkardMap {}),
+            1 => Box::new(ArchitectRoomsMap {}),
+            _ => Box::new(ArchitectAutomataMap {}),
         };
         let mut mb = architect.get_map_builder(rng);
         insert_fortress(&mut mb, rng);

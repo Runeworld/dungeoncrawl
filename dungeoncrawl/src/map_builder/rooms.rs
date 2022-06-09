@@ -3,9 +3,9 @@
 use super::MapArchitect;
 use crate::prelude::*;
 
-pub struct RoomsArchitect {}
+pub struct ArchitectRoomsMap {}
 
-impl MapArchitect for RoomsArchitect {
+impl MapArchitect for ArchitectRoomsMap {
     fn get_map_builder(&mut self, rng: &mut RandomNumberGenerator) -> MapBuilder {
         let mut mb = MapBuilder {
             map: Map::new(),

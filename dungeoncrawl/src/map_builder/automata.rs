@@ -3,9 +3,9 @@
 use super::MapArchitect;
 use crate::prelude::*;
 
-pub struct CellularAutomataArchitect {}
+pub struct ArchitectAutomataMap {}
 
-impl MapArchitect for CellularAutomataArchitect {
+impl MapArchitect for ArchitectAutomataMap {
     fn get_map_builder(&mut self, rng: &mut RandomNumberGenerator) -> MapBuilder {
         let mut mb = MapBuilder {
             map: Map::new(),
@@ -27,7 +27,7 @@ impl MapArchitect for CellularAutomataArchitect {
     }
 }
 
-impl CellularAutomataArchitect {
+impl ArchitectAutomataMap {
     fn random_noise_map(rng: &mut RandomNumberGenerator, map: &mut Map) {
         map.tiles.iter_mut().for_each(|t| {
             let roll = rng.range(0, 100);

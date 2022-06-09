@@ -7,9 +7,9 @@ const STAGGER_DISTANCE: usize = 400;
 const NUM_TILES: usize = (WORLD_WIDTH_IN_TILES * WORLD_HEIGHT_IN_TILES) as usize;
 const DESIRED_FLOOR: usize = NUM_TILES / 3;
 
-pub struct DrunkardsWalkArchitect {}
+pub struct ArchitectDrunkardMap {}
 
-impl MapArchitect for DrunkardsWalkArchitect {
+impl MapArchitect for ArchitectDrunkardMap {
     fn get_map_builder(&mut self, rng: &mut RandomNumberGenerator) -> MapBuilder {
         let mut mb = MapBuilder {
             map: Map::new(),
@@ -60,7 +60,7 @@ impl MapArchitect for DrunkardsWalkArchitect {
     }
 }
 
-impl DrunkardsWalkArchitect {
+impl ArchitectDrunkardMap {
     fn drunkard(start: &Point, rng: &mut RandomNumberGenerator, map: &mut Map) {
         let mut drunkard_pos = *start;
         let mut distance_staggered = 0;
