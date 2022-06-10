@@ -36,7 +36,7 @@ pub fn random_move(ecs: &SubWorld, commands: &mut CommandBuffer) {
                         },
                     ));
                 }
-                attacked = true; // Even if no attack was launched: Prevents monsters from stacking TODO: Make explicit
+                attacked = true;
             });
 
         if !attacked {

@@ -15,6 +15,7 @@
         - increase monster probability based on level
         - decrease item probability based on level
 - restart button for testing
+- rework attacking (chasing, random_movement, player_input / attacked / stacking)
 
 === HOUSEKEEPING ===
 - testing (strategy?)
