@@ -1,4 +1,5 @@
-// @TODO: Check where entry_ref can be replaced with optional component like in tooltips
+// @TODO: Add event log to HUD
+// @TODO: Add stats to player and monsters and add combat mechanics based on them (dodge, parry, block, crit, miss, ...)
 // @TODO: Make monsters move randomly when not chasing player
 // @TODO: Introduce BGM
 // @TODO: Introduce SFX
