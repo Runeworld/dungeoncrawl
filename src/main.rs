@@ -52,27 +52,35 @@ struct State {
     player_systems: Schedule,
     monster_systems: Schedule,
 }
+
 impl State {
     fn new() -> Self {
-        let mut ecs = World::default();
-        let mut resources = Resources::default();
+        Self {
+            ecs: World::default(),
+            resources: Resources::default(),
+            input_systems: Schedule::builder().build(),
+            player_systems: Schedule::builder().build(),
+            monster_systems: Schedule::builder().build(),
+        }
+    }
+
+    fn set_default(&mut self) {
+        self.ecs = World::default();
+        self.resources = Resources::default();
         let mut rng = RandomNumberGenerator::new();
         let mut map_builder = MapBuilder::new(&mut rng);
-        spawn_player(&mut ecs, map_builder.player_start);
+        spawn_player(&mut self.ecs, map_builder.player_start);
         let exit_idx = map_builder.map.point2d_to_index(map_builder.amulet_start);
         map_builder.map.tiles[exit_idx] = TileType::Exit;
-        spawn_level(&mut ecs, &mut rng, 0, &map_builder.spawn_points);
-        resources.insert(map_builder.map);
-        resources.insert(Camera::new(map_builder.player_start));
-        resources.insert(TurnState::AwaitingInput);
-        resources.insert(map_builder.theme);
-        Self {
-            ecs,
-            resources,
-            input_systems: build_input_scheduler(),
-            player_systems: build_player_scheduler(),
-            monster_systems: build_monster_scheduler(),
-        }
+        spawn_level(&mut self.ecs, &mut rng, 0, &map_builder.spawn_points);
+        self.resources.insert(map_builder.map);
+        self.resources.insert(Camera::new(map_builder.player_start));
+        self.resources.insert(TurnState::AwaitingInput);
+        self.resources.insert(map_builder.theme);
+
+        self.input_systems = build_input_scheduler();
+        self.player_systems = build_player_scheduler();
+        self.monster_systems = build_monster_scheduler();
     }
 
     fn game_over(&mut self, ctx: &mut BTerm) {
@@ -99,7 +107,7 @@ impl State {
         ctx.print_color_centered(9, GREEN, BLACK, "Press 1 to play again.");
 
         if let Some(VirtualKeyCode::Key1) = ctx.key {
-            self.reset_game_state();
+            self.set_default();
         }
     }
 
@@ -121,23 +129,8 @@ impl State {
         ctx.print_color_centered(7, GREEN, BLACK, "Press 1 to play again.");
 
         if let Some(VirtualKeyCode::Key1) = ctx.key {
-            self.reset_game_state();
+            self.set_default();
         }
-    }
-
-    fn reset_game_state(&mut self) {
-        self.ecs = World::default();
-        self.resources = Resources::default();
-        let mut rng = RandomNumberGenerator::new();
-        let mut map_builder = MapBuilder::new(&mut rng);
-        spawn_player(&mut self.ecs, map_builder.player_start);
-        let exit_idx = map_builder.map.point2d_to_index(map_builder.amulet_start);
-        map_builder.map.tiles[exit_idx] = TileType::Exit;
-        spawn_level(&mut self.ecs, &mut rng, 0, &map_builder.spawn_points);
-        self.resources.insert(map_builder.map);
-        self.resources.insert(Camera::new(map_builder.player_start));
-        self.resources.insert(TurnState::AwaitingInput);
-        self.resources.insert(map_builder.theme);
     }
 
     fn advance_level(&mut self) {
@@ -199,6 +192,7 @@ impl State {
         self.resources.insert(map_builder.theme);
     }
 }
+
 impl GameState for State {
     fn tick(&mut self, ctx: &mut BTerm) {
         ctx.set_active_console(CONSOLE_LAYER_ENVIRONMENT);
@@ -254,5 +248,7 @@ fn main() -> BError {
             "terminal8x8.png",
         )
         .build()?;
-    main_loop(context, State::new())
+    let mut gamestate = State::new();
+    gamestate.set_default();
+    main_loop(context, gamestate)
 }
