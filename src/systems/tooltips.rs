@@ -25,15 +25,21 @@ pub fn tooltips(ecs: &SubWorld, #[resource] mouse_pos: &Point, #[resource] camer
             let name_display = name.0.clone();
             draw_batch.print(screen_pos, &name_display);
 
-            if health.is_some() {
-                // @TODO: Display health as healthbar
+            if let Some(health) = health {
+                let healthbar_width = 4;
                 let screen_pos_health_offset = Point { x: 0, y: 1 };
-                let health_display = format!(
-                    "Health: {} / {}",
-                    health.unwrap().current,
-                    health.unwrap().max
+                draw_batch.print_color(
+                    screen_pos + screen_pos_health_offset,
+                    format!("Health: {} / {}", health.current, health.max),
+                    ColorPair::new(WHITE, RED),
                 );
-                draw_batch.print(screen_pos + screen_pos_health_offset, health_display);
+                draw_batch.bar_horizontal(
+                    screen_pos + Point { x: -4, y: 4 },
+                    healthbar_width,
+                    health.current * healthbar_width - 1,
+                    health.max * healthbar_width,
+                    ColorPair::new(RED, BLACK),
+                );
             }
         });
     draw_batch.submit(Z_INDEX_TOOLTIPS).expect("Batch error");
