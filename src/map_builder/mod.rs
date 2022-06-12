@@ -150,7 +150,7 @@ impl MapBuilder {
             .enumerate()
             .filter(|(idx, t)| {
                 **t == TileType::Floor
-                    && DistanceAlg::Pythagoras.distance2d(*start, self.map.index_to_point2d(*idx)) // @TODO: Use Dijkstra pathfinding distance instead?
+                    && DistanceAlg::Pythagoras.distance2d(*start, self.map.index_to_point2d(*idx)) // @CONSIDER: Use Dijkstra pathfinding distance instead?
                         > 10.0
             })
             .map(|(idx, _)| self.map.index_to_point2d(idx))
