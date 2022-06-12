@@ -71,7 +71,7 @@ impl MapBuilder {
                 .enumerate()
                 .filter(|(_, dist)| *dist < DIJKSTRA_UNREACHABLE)
                 .max_by(|a, b| a.1.partial_cmp(b.1).unwrap())
-                .unwrap()
+                .unwrap() // @PANIC: Sometimes None - Reproduce by starting game and resetting the game until crash
                 .0,
         )
     }
