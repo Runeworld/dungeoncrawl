@@ -218,6 +218,7 @@ impl GameState for State {
             TurnState::GameOver => self.game_over(ctx),
             TurnState::Victory => self.victory(ctx),
             TurnState::NextLevel => self.advance_level(),
+            TurnState::Restart => self.set_default(),
         }
         render_draw_buffer(ctx).expect("Render error");
     }

@@ -53,6 +53,10 @@ pub fn player_input(
                     });
                 Point::new(0, 0)
             }
+            VirtualKeyCode::Back => {
+                *turn_state = TurnState::Restart;
+                return;
+            }
             VirtualKeyCode::Key1 => use_item(0, ecs, commands),
             VirtualKeyCode::Key2 => use_item(1, ecs, commands),
             VirtualKeyCode::Key3 => use_item(2, ecs, commands),
