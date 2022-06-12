@@ -23,7 +23,7 @@ const NUM_ROOMS: usize = 20;
 pub struct MapBuilder {
     pub map: Map,
     pub rooms: Vec<Rect>,
-    pub monster_spawns: Vec<Point>,
+    pub spawn_points: Vec<Point>,
     pub player_start: Point,
     pub amulet_start: Point,
     pub theme: Box<dyn MapTheme>,
@@ -141,7 +141,7 @@ impl MapBuilder {
         }
     }
 
-    fn spawn_monsters(&self, start: &Point, rng: &mut RandomNumberGenerator) -> Vec<Point> {
+    fn spawn_points(&self, start: &Point, rng: &mut RandomNumberGenerator) -> Vec<Point> {
         const NUM_MONSTERS: usize = 50;
         let mut spawnable_tiles: Vec<Point> = self
             .map
@@ -150,7 +150,7 @@ impl MapBuilder {
             .enumerate()
             .filter(|(idx, t)| {
                 **t == TileType::Floor
-                    && DistanceAlg::Pythagoras.distance2d(*start, self.map.index_to_point2d(*idx))
+                    && DistanceAlg::Pythagoras.distance2d(*start, self.map.index_to_point2d(*idx)) // @TODO: Use Dijkstra pathfinding distance instead?
                         > 10.0
             })
             .map(|(idx, _)| self.map.index_to_point2d(idx))

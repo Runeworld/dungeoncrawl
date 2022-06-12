@@ -14,7 +14,7 @@ impl MapArchitect for ArchitectDrunkardMap {
         let mut mb = MapBuilder {
             map: Map::new(),
             rooms: Vec::new(),
-            monster_spawns: Vec::new(),
+            spawn_points: Vec::new(),
             player_start: Point::zero(),
             amulet_start: Point::zero(),
             theme: Box::new(super::themes::DungeonTheme::new()),
@@ -53,7 +53,7 @@ impl MapArchitect for ArchitectDrunkardMap {
                 .filter(|(_, distance)| *distance > &2000.0)
                 .for_each(|(idx, _)| mb.map.tiles[idx] = TileType::Wall);
         }
-        mb.monster_spawns = mb.spawn_monsters(&center, rng);
+        mb.spawn_points = mb.spawn_points(&center, rng);
         mb.player_start = center;
         mb.amulet_start = mb.find_most_distant();
         mb

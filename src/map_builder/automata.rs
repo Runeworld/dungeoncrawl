@@ -10,7 +10,7 @@ impl MapArchitect for ArchitectAutomataMap {
         let mut mb = MapBuilder {
             map: Map::new(),
             rooms: Vec::new(),
-            monster_spawns: Vec::new(),
+            spawn_points: Vec::new(),
             player_start: Point::zero(),
             amulet_start: Point::zero(),
             theme: Box::new(super::themes::DungeonTheme::new()),
@@ -20,7 +20,7 @@ impl MapArchitect for ArchitectAutomataMap {
             Self::iteration(&mut mb.map);
         }
         let start = Self::find_start(&mb.map);
-        mb.monster_spawns = mb.spawn_monsters(&start, rng);
+        mb.spawn_points = mb.spawn_points(&start, rng);
         mb.player_start = start;
         mb.amulet_start = mb.find_most_distant();
         mb

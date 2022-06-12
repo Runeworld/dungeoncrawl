@@ -4,6 +4,9 @@ use template::Templates;
 
 pub const GLYPH_PLAYER: char = '@';
 pub const GLYPH_AMULET_OF_YALA: char = '|';
+pub const PLAYER_FOV: i32 = 8;
+pub const PLAYER_DAMAGE: i32 = 1;
+pub const PLAYER_HEALTH_MAX: i32 = 10;
 
 pub fn spawn_player(ecs: &mut World, pos: Point) {
     ecs.push((
@@ -14,11 +17,11 @@ pub fn spawn_player(ecs: &mut World, pos: Point) {
             glyph: to_cp437(GLYPH_PLAYER),
         },
         Health {
-            current: 10,
-            max: 10,
+            current: PLAYER_HEALTH_MAX,
+            max: PLAYER_HEALTH_MAX,
         },
-        FieldOfView::new(8),
-        Damage(1),
+        FieldOfView::new(PLAYER_FOV),
+        Damage(PLAYER_DAMAGE),
     ));
 }
 

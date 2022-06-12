@@ -10,7 +10,7 @@ impl MapArchitect for ArchitectEmptyMap {
         let mut mb = MapBuilder {
             map: Map::new(),
             rooms: Vec::new(),
-            monster_spawns: Vec::new(),
+            spawn_points: Vec::new(),
             player_start: Point::zero(),
             amulet_start: Point::zero(),
             theme: Box::new(super::themes::DungeonTheme::new()),
@@ -19,7 +19,7 @@ impl MapArchitect for ArchitectEmptyMap {
         mb.player_start = Point::new(WORLD_WIDTH_IN_TILES / 2, WORLD_HEIGHT_IN_TILES / 2);
         mb.amulet_start = mb.find_most_distant();
         for _ in 0..50 {
-            mb.monster_spawns.push(Point::new(
+            mb.spawn_points.push(Point::new(
                 rng.range(1, WORLD_WIDTH_IN_TILES),
                 rng.range(1, WORLD_WIDTH_IN_TILES),
             ));
