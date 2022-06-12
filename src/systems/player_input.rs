@@ -1,5 +1,3 @@
-// @TODO: Add restart button for testing
-
 use crate::prelude::*;
 
 #[system]
