@@ -19,6 +19,6 @@ opt-level = 1
 opt-level = 3
 
 [profile.release]
-lto = "thin" # 'fat' for even more performance
-#codegen-units = 1
+lto = "fat"
+codegen-units = 1
 #panic = "abort"
