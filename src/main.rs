@@ -1,5 +1,11 @@
 // @TODO: Check where entry_ref can be replaced with optional component like in tooltips
 // @TODO: Make monsters move randomly when not chasing player
+// @TODO: Introduce BGM
+// @TODO: Introduce SFX
+// @TODO: Implement directional FOV for players and monsters
+// @TODO: Implement FOV that get darker (gradient) towards the edge and no "discovered" tiles (! dungeon map)
+// @TODO: Fix monsters stacking
+// @TODO: Make monsters more and items less likely with increasing dungeon level
 
 #![warn(clippy::pedantic)]
 #![allow(clippy::trivially_copy_pass_by_ref, clippy::borrowed_box)]

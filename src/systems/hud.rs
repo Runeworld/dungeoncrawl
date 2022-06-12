@@ -1,3 +1,6 @@
+// @TODO: Stack items in inventory and rework player input for using them
+// @TODO: Visually and logically separate inventory from current equipment
+
 use crate::prelude::*;
 
 #[system]

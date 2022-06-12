@@ -1,3 +1,5 @@
+// @TODO: Make map edges always walls
+
 use crate::prelude::*;
 mod empty;
 mod rooms;
