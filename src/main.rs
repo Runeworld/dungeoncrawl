@@ -1,3 +1,5 @@
+// @TODO: Check where entry_ref can be replaced with optional component like in tooltips
+
 #![warn(clippy::pedantic)]
 #![allow(clippy::trivially_copy_pass_by_ref, clippy::borrowed_box)]
 
