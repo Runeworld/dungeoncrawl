@@ -12,7 +12,10 @@ pub fn hud(ecs: &SubWorld) {
 
     let mut draw_batch = DrawBatch::new();
     draw_batch.target(CONSOLE_LAYER_HUD);
-    draw_batch.print_centered(1, "Explore the Dungeon. Cursor keys to move.");
+    draw_batch.print_centered(
+        1,
+        "Find the amulet. Arrow keys to move. G to pick up items. Number keys to use items.", // @TODO: Move tutorial before game start
+    );
     draw_batch.bar_horizontal(
         Point::zero(),
         WORLD_WIDTH_IN_TILES * 2,
