@@ -1,6 +1,5 @@
 // @TODO: Add event log to HUD
 // @TODO: Add stats to player and monsters and add combat mechanics based on them (dodge, parry, block, crit, miss, ...)
-// @TODO: Make monsters move randomly when not chasing player
 // @TODO: Introduce BGM
 // @TODO: Introduce SFX
 // @TODO: Implement directional FOV for players and monsters
