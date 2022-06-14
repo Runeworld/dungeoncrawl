@@ -24,6 +24,23 @@ pub fn chasing(#[resource] map: &Map, ecs: &SubWorld, commands: &mut CommandBuff
 
     movers.iter(ecs).for_each(|(entity, pos, _, fov)| {
         if !fov.visible_tiles.contains(player_pos) {
+            // Random movement when player is not visible
+            // @TODO: Fix duplication with random_move system
+            // @CONSIDER: Maybe implement spotting or state change system that sets enemy state (chasing / moving randomly / etc.)
+            let mut rng = RandomNumberGenerator::new();
+            let destination = match rng.range(0, 4) {
+                0 => Point::new(-1, 0),
+                1 => Point::new(1, 0),
+                2 => Point::new(0, -1),
+                _ => Point::new(0, 1),
+            } + *pos;
+            commands.push((
+                (),
+                WantsToMove {
+                    entity: *entity,
+                    destination,
+                },
+            ));
             return;
         }
         let idx = get_idx(pos.x, pos.y);
