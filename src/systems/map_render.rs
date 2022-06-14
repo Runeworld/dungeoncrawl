@@ -26,7 +26,7 @@ pub fn map_render(
                 let tint = if player_fov.visible_tiles.contains(&pt) {
                     WHITE
                 } else {
-                    DARK_GRAY
+                    GREY30
                 };
 
                 let glyph = theme.tile_to_render(map.tiles[idx]);
