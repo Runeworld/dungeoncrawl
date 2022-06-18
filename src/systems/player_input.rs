@@ -19,8 +19,24 @@ pub fn player_input(
 
     if let Some(key) = *key {
         let delta = match key {
-            VirtualKeyCode::Left => Point::new(-1, 0),
-            VirtualKeyCode::Right => Point::new(1, 0),
+            VirtualKeyCode::Left => {
+                commands.push((
+                    (),
+                    EventLogMessage {
+                        content: "Player moved left".to_string(),
+                    },
+                ));
+                Point::new(-1, 0)
+            }
+            VirtualKeyCode::Right => {
+                commands.push((
+                    (),
+                    EventLogMessage {
+                        content: "Player moved right".to_string(),
+                    },
+                ));
+                Point::new(1, 0)
+            }
             VirtualKeyCode::Up => Point::new(0, -1),
             VirtualKeyCode::Down => Point::new(0, 1),
             VirtualKeyCode::G => {

@@ -95,3 +95,8 @@ impl FieldOfView {
         }
     }
 }
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct EventLogMessage {
+    pub content: String,
+}
