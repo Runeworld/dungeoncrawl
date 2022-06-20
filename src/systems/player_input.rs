@@ -37,8 +37,24 @@ pub fn player_input(
                 ));
                 Point::new(1, 0)
             }
-            VirtualKeyCode::Up => Point::new(0, -1),
-            VirtualKeyCode::Down => Point::new(0, 1),
+            VirtualKeyCode::Up => {
+                commands.push((
+                    (),
+                    EventLogMessage {
+                        content: "Player moved up".to_string(),
+                    },
+                ));
+                Point::new(0, -1)
+            }
+            VirtualKeyCode::Down => {
+                commands.push((
+                    (),
+                    EventLogMessage {
+                        content: "Player moved down".to_string(),
+                    },
+                ));
+                Point::new(0, 1)
+            }
             VirtualKeyCode::G => {
                 let (player, player_pos) = players
                     .iter(ecs)
