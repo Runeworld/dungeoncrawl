@@ -1,3 +1,5 @@
+// @TODO: Separate TODOs and similar into MVP / nice-to-have / to be considered (might not be desirable)
+
 // @TODO: Add event log to HUD
 // @TODO: Add stats to player and monsters and add combat mechanics based on them (dodge, parry, block, crit, miss, ...)
 // @TODO: Introduce BGM
