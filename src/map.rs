@@ -9,7 +9,7 @@ pub enum TileType {
     Exit,
 }
 
-pub fn get_idx(x: i32, y: i32) -> usize {
+pub const fn get_idx(x: i32, y: i32) -> usize {
     ((y * WORLD_WIDTH_IN_TILES) + x).unsigned_abs() as usize
 }
 

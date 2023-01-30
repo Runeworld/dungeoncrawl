@@ -20,15 +20,9 @@ pub fn combat(ecs: &mut SubWorld, commands: &mut CommandBuffer) {
             .get_component::<Player>()
             .is_ok();
 
-        let base_damage = if let Ok(v) = ecs.entry_ref(*attacker) {
-            if let Ok(dmg) = v.get_component::<Damage>() {
-                dmg.0
-            } else {
-                0
-            }
-        } else {
-            0
-        };
+        let base_damage = ecs
+            .entry_ref(*attacker)
+            .map_or(0, |v| v.get_component::<Damage>().map_or(0, |dmg| dmg.0));
 
         let weapon_damage: i32 = <(&Carried, &Damage)>::query()
             .iter(ecs)

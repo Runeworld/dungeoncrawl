@@ -9,7 +9,7 @@
 // @TODO: Fix monsters stacking
 // @TODO: Make monsters more and items less likely with increasing dungeon level
 
-#![warn(clippy::pedantic, clippy::all)] // clippy::nursery, clippy::cargo
+#![warn(clippy::pedantic, clippy::all, clippy::nursery)] // clippy::cargo
 
 mod camera;
 mod components;
@@ -107,7 +107,7 @@ impl State {
         );
         ctx.print_color_centered(9, GREEN, BLACK, "Press 1 to play again.");
 
-        if let Some(VirtualKeyCode::Key1) = ctx.key {
+        if ctx.key == Some(VirtualKeyCode::Key1) {
             self.set_default();
         }
     }
@@ -129,7 +129,7 @@ impl State {
         );
         ctx.print_color_centered(7, GREEN, BLACK, "Press 1 to play again.");
 
-        if let Some(VirtualKeyCode::Key1) = ctx.key {
+        if ctx.key == Some(VirtualKeyCode::Key1) {
             self.set_default();
         }
     }

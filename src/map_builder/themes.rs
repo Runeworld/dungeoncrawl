@@ -11,7 +11,7 @@ pub const GLYPH_FOREST_EXIT: char = '>';
 pub struct DungeonTheme {}
 
 impl DungeonTheme {
-    pub fn new() -> Self {
+    pub const fn new() -> Self {
         Self {}
     }
 }
@@ -39,7 +39,7 @@ impl MapTheme for ForestTheme {
 }
 
 impl ForestTheme {
-    pub fn new() -> Self {
+    pub const fn new() -> Self {
         Self {}
     }
 }

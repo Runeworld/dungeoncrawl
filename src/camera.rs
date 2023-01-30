@@ -7,7 +7,7 @@ pub struct Camera {
     pub bottom_y: i32,
 }
 impl Camera {
-    pub fn new(player_position: Point) -> Self {
+    pub const fn new(player_position: Point) -> Self {
         Self {
             left_x: player_position.x - WINDOW_WIDTH_IN_TILES / 2,
             right_x: player_position.x + WINDOW_WIDTH_IN_TILES / 2,
