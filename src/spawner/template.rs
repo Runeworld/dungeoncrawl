@@ -90,7 +90,7 @@ impl Templates {
                     "Healing" => commands.add_component(entity, ProvidesHealing { amount: *n }),
                     "MagicMap" => commands.add_component(entity, ProvidesDungeonMap {}),
                     _ => {
-                        println!("Warning: we don't know how to provide {}", provides);
+                        println!("Warning: we don't know how to provide {provides}");
                     }
                 });
         }
