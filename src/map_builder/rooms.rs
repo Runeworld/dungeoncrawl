@@ -21,7 +21,7 @@ impl MapArchitect for ArchitectRoomsMap {
         mb.build_corridors(rng);
         mb.player_start = mb.rooms[0].center();
         mb.amulet_start = mb.find_most_distant();
-        mb.spawn_points = mb.spawn_points(&mb.player_start, rng);
+        mb.spawn_points = mb.spawn_points(mb.player_start, rng);
         mb
     }
 }

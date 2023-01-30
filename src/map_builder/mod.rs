@@ -143,7 +143,7 @@ impl MapBuilder {
         }
     }
 
-    fn spawn_points(&self, start: &Point, rng: &mut RandomNumberGenerator) -> Vec<Point> {
+    fn spawn_points(&self, start: Point, rng: &mut RandomNumberGenerator) -> Vec<Point> {
         const NUM_MONSTERS: usize = 50;
         let mut spawnable_tiles: Vec<Point> = self
             .map
@@ -152,7 +152,7 @@ impl MapBuilder {
             .enumerate()
             .filter(|(idx, t)| {
                 **t == TileType::Floor
-                    && DistanceAlg::Pythagoras.distance2d(*start, self.map.index_to_point2d(*idx)) // @CONSIDER: Use Dijkstra pathfinding distance instead?
+                    && DistanceAlg::Pythagoras.distance2d(start, self.map.index_to_point2d(*idx)) // @CONSIDER: Use Dijkstra pathfinding distance instead?
                         > 10.0
             })
             .map(|(idx, _)| self.map.index_to_point2d(idx))

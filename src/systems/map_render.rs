@@ -3,6 +3,7 @@ use crate::prelude::*;
 #[system]
 #[read_component(FieldOfView)]
 #[read_component(Player)]
+#[allow(clippy::borrowed_box)]
 pub fn map_render(
     #[resource] map: &Map,
     #[resource] camera: &Camera,

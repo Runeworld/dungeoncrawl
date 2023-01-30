@@ -22,7 +22,7 @@ impl MapArchitect for ArchitectDrunkardMap {
 
         mb.fill(TileType::Wall);
         let center = Point::new(WORLD_WIDTH_IN_TILES / 2, WORLD_HEIGHT_IN_TILES / 2);
-        Self::drunkard(&center, rng, &mut mb.map);
+        Self::drunkard(center, rng, &mut mb.map);
         while mb
             .map
             .tiles
@@ -32,7 +32,7 @@ impl MapArchitect for ArchitectDrunkardMap {
             < DESIRED_FLOOR
         {
             Self::drunkard(
-                &Point::new(
+                Point::new(
                     rng.range(0, WORLD_WIDTH_IN_TILES),
                     rng.range(0, WORLD_HEIGHT_IN_TILES),
                 ),
@@ -53,7 +53,7 @@ impl MapArchitect for ArchitectDrunkardMap {
                 .filter(|(_, distance)| *distance > &2000.0)
                 .for_each(|(idx, _)| mb.map.tiles[idx] = TileType::Wall);
         }
-        mb.spawn_points = mb.spawn_points(&center, rng);
+        mb.spawn_points = mb.spawn_points(center, rng);
         mb.player_start = center;
         mb.amulet_start = mb.find_most_distant();
         mb
@@ -61,8 +61,8 @@ impl MapArchitect for ArchitectDrunkardMap {
 }
 
 impl ArchitectDrunkardMap {
-    fn drunkard(start: &Point, rng: &mut RandomNumberGenerator, map: &mut Map) {
-        let mut drunkard_pos = *start;
+    fn drunkard(start: Point, rng: &mut RandomNumberGenerator, map: &mut Map) {
+        let mut drunkard_pos = start;
         let mut distance_staggered = 0;
 
         loop {

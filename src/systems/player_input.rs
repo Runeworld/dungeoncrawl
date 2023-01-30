@@ -8,6 +8,7 @@ use crate::prelude::*;
 #[read_component(Item)]
 #[read_component(Carried)]
 #[read_component(Weapon)]
+#[allow(clippy::trivially_copy_pass_by_ref)]
 pub fn player_input(
     ecs: &mut SubWorld,
     commands: &mut CommandBuffer,

@@ -20,7 +20,7 @@ impl MapArchitect for ArchitectAutomataMap {
             Self::iteration(&mut mb.map);
         }
         let start = Self::find_start(&mb.map);
-        mb.spawn_points = mb.spawn_points(&start, rng);
+        mb.spawn_points = mb.spawn_points(start, rng);
         mb.player_start = start;
         mb.amulet_start = mb.find_most_distant();
         mb

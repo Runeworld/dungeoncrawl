@@ -9,7 +9,7 @@
 // @TODO: Fix monsters stacking
 // @TODO: Make monsters more and items less likely with increasing dungeon level
 
-#![warn(clippy::pedantic, clippy::all)]
+#![warn(clippy::pedantic, clippy::all)] // clippy::nursery, clippy::cargo
 
 mod camera;
 mod components;

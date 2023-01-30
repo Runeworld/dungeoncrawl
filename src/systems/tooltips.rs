@@ -6,6 +6,7 @@ use crate::prelude::*;
 #[read_component(Health)]
 #[read_component(FieldOfView)]
 #[read_component(Player)]
+#[allow(clippy::trivially_copy_pass_by_ref)]
 pub fn tooltips(ecs: &SubWorld, #[resource] mouse_pos: &Point, #[resource] camera: &Camera) {
     let mut positions = <(&Point, &Name, Option<&Health>)>::query();
     let mut player_fov = <&FieldOfView>::query().filter(component::<Player>());
