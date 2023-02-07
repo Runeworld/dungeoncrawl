@@ -2,6 +2,7 @@ use crate::prelude::*;
 
 #[system]
 #[read_component(EventLogMessage)]
+#[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
 pub fn event_log_render(ecs: &SubWorld, _commands: &mut CommandBuffer) {
     let mut message_query = <(Entity, &EventLogMessage)>::query();
     let message_count = message_query.iter(ecs).count() as i32;
