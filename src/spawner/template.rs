@@ -51,7 +51,7 @@ impl Templates {
             });
 
         let mut commands = legion::systems::CommandBuffer::new(ecs);
-        for pt in spawn_points.iter() {
+        for pt in spawn_points {
             if let Some(entity) = rng.random_slice_entry(&available_entities) {
                 Self::spawn_entity(*pt, entity, &mut commands);
             }
